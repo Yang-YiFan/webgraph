@@ -16,3 +16,4 @@ endif
 clean:
 	rm -f *.o
 	rm -f *~
+	$(MAKE) -C tests clean

@@ -67,7 +67,7 @@ offline_graph offline_graph::load( const string& basename ) {
    // now read number of edges
    result.num_edges = 0;
    edge_iterator b, e;
-   tie( b, e ) = result.get_edge_iterator();
+   boost::tie( b, e ) = result.get_edge_iterator();
    for( ; b != e; ++b ) {
       result.num_edges++;
    }

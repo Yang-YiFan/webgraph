@@ -2113,7 +2113,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 
    // We iterate over the nodes of graph
    graph_type::node_iterator node_itor, node_itor_end;
-   for ( tie( node_itor, node_itor_end) = olg.get_vertex_iterator(); 
+   for ( boost::tie( node_itor, node_itor_end) = olg.get_vertex_iterator(); 
          node_itor != node_itor_end;
          ++node_itor ) {
       // curr_node is the currently examined node, of outdegree outd, with index currIndex
@@ -2265,7 +2265,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 void graph::write_offsets( obitstream& obs, ostream* log ) {
    node_iterator node_itor, end;
    
-   tie( node_itor, end ) = get_node_iterator( 0 );
+   boost::tie( node_itor, end ) = get_node_iterator( 0 );
    
    int n = get_num_nodes();
    

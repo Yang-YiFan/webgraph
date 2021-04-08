@@ -18,3 +18,4 @@ bitstreams: input_bitstream.o output_bitstream.o ../utils/fast.o
 clean:
 	rm -f *.o
 	rm -f *~
+	$(MAKE) -C tests clean

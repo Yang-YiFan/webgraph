@@ -1,1 +1,3 @@
 .svn
+**.o
+libwebgraph.a

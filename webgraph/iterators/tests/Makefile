@@ -25,6 +25,7 @@ clean:
 	rm -f *.o
 	rm -f test_merged_iterator
 	rm -f test_masked_iterator
+	rm -f test_interval_sequence_iterator
 	rm -f core.*
 	rm -f *~
 

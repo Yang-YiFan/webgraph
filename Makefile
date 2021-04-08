@@ -34,6 +34,7 @@ clean:
 	rm -f core*
 	rm -f *~
 	rm -f *.o
+	rm -f libwebgraph.a
 	@$(MAKE) -C asciigraph clean
 	@$(MAKE) -C bitstreams clean
 	@$(MAKE) -C properties clean
