@@ -2,7 +2,7 @@ include ../flags.mk
 
 compress_webgraph: compress_webgraph.o
 	g++ -L$(LIBS) -o compress_webgraph compress_webgraph.o \
-			 -lwebgraph -lboost_regex -lboost_program_options -lboost_filesystem
+			 -lwebgraph -lboost_regex -lboost_program_options -lboost_filesystem -lboost_system
 
 install:
 	cp compress_webgraph ~/random-bin

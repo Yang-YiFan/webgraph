@@ -1,7 +1,7 @@
 # Change these to match your configuration
 
-INCLUDES = /u/jpr/old_code/webgraph
-LIBS = /u/jpr/old_code/webgraph
+INCLUDES = /data/sanchez/users/yifany/graph_compression_prj/webgraph
+LIBS = /data/sanchez/users/yifany/graph_compression_prj/webgraph
 
 #LIBS = /u/jpr/workspace/cpp_webgraph
 
