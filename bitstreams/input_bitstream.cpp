@@ -141,9 +141,10 @@ int ibitstream::read() {
    // deal with reading into the buffer.
    if ( avail == 0 ) {
       // then the buffer is empty. attempt to fill it again.
-      if( is != NULL )
+      if( is != NULL ) {
          assert( buffer->size() == buffer->capacity() );
          avail = is->readsome( (char*)&(*buffer).at(0), buffer->size() ); // used to be capacity
+      }
 #ifdef LOGGING         
       cerr << "==================================================\n";
       cerr << "BUFFER REFILLED; first 50 bytes : \n";
@@ -772,7 +773,6 @@ int ibitstream::read_zeta( int k ) {
          }
       }
    }
-
    const int h = read_unary();
    const int left = 1 << h * k;
    const int m = read_int( h * k + k - 1 );

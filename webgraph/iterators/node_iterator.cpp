@@ -86,7 +86,7 @@ void node_iterator::increment() {
    } else {
       assert( curr < n - 1 );
       int cur_index = ++curr % cyclic_buffer_size;
-      
+
       graph::internal_succ_itor_ptr itor;
       
       itor = owner->get_successors_internal( curr, ibs, window, outd, block_outdegrees );
