@@ -101,7 +101,7 @@ int main( int argc, char** argv ) {
 
    typedef masked_iterator<int> mi_t;
 
-   boost::shared_ptr< wrapper_t > wrapped( new wrapper_t( x.begin(), x.end() ) );
+   std::shared_ptr< wrapper_t > wrapped( new wrapper_t( x.begin(), x.end() ) );
 
    mi_t mi( blocks, wrapped );
 

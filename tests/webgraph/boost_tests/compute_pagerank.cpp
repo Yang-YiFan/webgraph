@@ -36,7 +36,7 @@
 
 int main(int argc, char** argv) {
    typedef webgraph::bv_graph::graph graph;
-   typedef boost::shared_ptr<graph> graph_ptr;
+   typedef std::shared_ptr<graph> graph_ptr;
    namespace po = boost::program_options;
    using namespace std;
 

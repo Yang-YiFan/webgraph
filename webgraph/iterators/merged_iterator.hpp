@@ -45,7 +45,7 @@ namespace webgraph { namespace bv_graph { namespace utility_iterators {
 template<class val_type>
 class merged_iterator : public utility_iterator_base<val_type> {
 public:
-   typedef boost::shared_ptr< utility_iterator_base<val_type> > underlying_ptr;
+   typedef std::shared_ptr< utility_iterator_base<val_type> > underlying_ptr;
 
 private:
    underlying_ptr it0, it1;

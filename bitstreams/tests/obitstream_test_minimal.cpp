@@ -33,7 +33,7 @@ void log_array( const vector<unsigned char>& ary, ostream& log );
 int main( int argc, char** argv ) {
    ofstream log( "cpp_obs_log");
 
-   boost::shared_ptr<vector<unsigned char> > dat( new vector<unsigned char>(5) );
+   std::shared_ptr<vector<unsigned char> > dat( new vector<unsigned char>(5) );
 
    webgraph::obitstream obs_underlying( dat );
 

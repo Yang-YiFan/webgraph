@@ -50,14 +50,14 @@ public:
    typedef unsigned char byte;
 protected:
    /** The underlying ostream. */
-   boost::shared_ptr<std::ostream> os;
+   std::shared_ptr<std::ostream> os;
    /** The number of bits written to this bit stream. */
    long written_bits;
    /** Current bit buffer. */
    int current;
 //   std::vector<bool> current_byte;
    /** The stream buffer. */
-   boost::shared_ptr<std::vector<byte> > buffer;
+   std::shared_ptr<std::vector<byte> > buffer;
    /** Current number of free bits in the bit buffer (the bits in the buffer are stored high). */
    int free;
    /** Current position in the byte buffer. */
@@ -97,7 +97,7 @@ private:
    }
    
 
-   void init( const boost::shared_ptr<std::ostream>& os, const int buf_size ) {
+   void init( const std::shared_ptr<std::ostream>& os, const int buf_size ) {
       init();
       
       this->os = os;
@@ -126,7 +126,7 @@ public:
     *
     * @param os the output stream to wrap.
     */
-   obitstream( const boost::shared_ptr<std::ostream>& os, const int buf_size = DEFAULT_BUFFER_SIZE ) :
+   obitstream( const std::shared_ptr<std::ostream>& os, const int buf_size = DEFAULT_BUFFER_SIZE ) :
       buffer( (buf_size == 0) ? NULL : new std::vector<byte>(buf_size) ) {
       init(os, buf_size );
    }
@@ -137,7 +137,7 @@ public:
     * 
     * @param a the byte array to wrap.
     */
-   obitstream( boost::shared_ptr<std::vector<byte> >& a ) : buffer(a) {
+   obitstream( std::shared_ptr<std::vector<byte> >& a ) : buffer(a) {
       init();
 
       free = 8;
@@ -152,7 +152,7 @@ public:
     */
    obitstream( const std::string name, const int buf_size = DEFAULT_BUFFER_SIZE ) :
       buffer( (buf_size == 0) ? NULL : new std::vector<byte>( buf_size ) ) {
-      boost::shared_ptr<std::ostream> o( new std::ofstream( name.c_str() ) );
+      std::shared_ptr<std::ostream> o( new std::ofstream( name.c_str() ) );
       init(o, buf_size);
    }
    

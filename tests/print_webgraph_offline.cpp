@@ -37,7 +37,7 @@ int main( int argc, char** argv ) {
    
    string name = argv[1];
 
-   typedef boost::shared_ptr<graph> graph_ptr;
+   typedef std::shared_ptr<graph> graph_ptr;
 
    graph_ptr gp = graph::load_offline( name );
    

@@ -44,7 +44,7 @@ private:
    int n; // = numNodes();
    
    /** Our bit stream. */
-   boost::shared_ptr<ibitstream> ibs;
+   std::shared_ptr<ibitstream> ibs;
    /** We keep the size of the cyclic buffer (the window size + 1 ) in a local variable. */
    int cyclic_buffer_size; // = windowSize + 1;
    /** At any time, window will be ready to be passed to {@link BVGraph#successors(int,
@@ -81,7 +81,7 @@ public:
    }
 
    ////////////////////////////////////////////////////////////////////////////////
-   node_iterator( const graph* owner, boost::shared_ptr<ibitstream> is, 
+   node_iterator( const graph* owner, std::shared_ptr<ibitstream> is, 
                   int from, int window_size );
 
    node_iterator( const node_iterator& rhs ) {

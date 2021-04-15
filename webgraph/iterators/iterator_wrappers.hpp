@@ -114,7 +114,7 @@ class java_to_cpp :
          val_type> {
 public:
    typedef utility_iterators::utility_iterator_base<val_type> underlying_t;
-   typedef boost::shared_ptr< underlying_t > underlying_ptr;
+   typedef std::shared_ptr< underlying_t > underlying_ptr;
    
 private:
    underlying_ptr underlying;

@@ -142,7 +142,7 @@ private:
 protected:
    typedef unsigned char byte;
 
-   boost::shared_ptr< std::vector<byte> > buffer;
+   std::shared_ptr< std::vector<byte> > buffer;
    /** Whether we should use the byte buffer. */
    bool no_buffer;
    /** Current number of bits in the bit buffer (stored low). */
@@ -166,7 +166,7 @@ protected:
 
 private:
    /** The stream backing this bit stream */
-   boost::shared_ptr<std::istream> is; 
+   std::shared_ptr<std::istream> is; 
 
    /** Precomputed byte parsing for &gamma; coding. bits 0-7 contain the value, bits 8-15
     * the length of the code. 0 means that parsing goes beyond 8 bits. */
@@ -197,7 +197,7 @@ private:
       wrapping = false;
    }
    
-   void init( const boost::shared_ptr<std::istream>& is, 
+   void init( const std::shared_ptr<std::istream>& is, 
               int buf_size ) {
       init();
       
@@ -225,7 +225,7 @@ public:
     * @param is the input stream to wrap.
     * @param bufSize the size in byte of the buffer; it may be 0, denoting no buffering.
     */
-   ibitstream( const boost::shared_ptr<std::istream>& is, 
+   ibitstream( const std::shared_ptr<std::istream>& is, 
                int buf_size = DEFAULT_BUFFER_SIZE ) :
       buffer( (buf_size == 0) ? NULL : new std::vector<byte>(buf_size) )
    {
@@ -238,7 +238,7 @@ public:
     * 
     * @param a the byte array to wrap.
     */
-   ibitstream( const boost::shared_ptr< std::vector<byte> >& a ) : buffer(a) {
+   ibitstream( const std::shared_ptr< std::vector<byte> >& a ) : buffer(a) {
       init();
       
       // is = NullInputStrema.getInstance();
@@ -267,7 +267,7 @@ public:
    ibitstream( std::string file_name, int buf_size = DEFAULT_BUFFER_SIZE ) :
       buffer( (buf_size == 0) ? NULL : new std::vector<byte>(buf_size) )
    {
-      boost::shared_ptr<std::istream> i( new std::ifstream( file_name.c_str() ) );
+      std::shared_ptr<std::istream> i( new std::ifstream( file_name.c_str() ) );
       
       init( i, buf_size );
    }
@@ -281,7 +281,7 @@ public:
    /**
     * Attaches this input bitstream to the given buffer.
     */
-   /* virtual */void attach( boost::shared_ptr<std::vector<unsigned char> > buf ) {
+   /* virtual */void attach( std::shared_ptr<std::vector<unsigned char> > buf ) {
       buffer = buf;
       init();
 

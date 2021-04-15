@@ -59,7 +59,7 @@ struct constructor_caller<std::string, std::ofstream> {
 template< class key_type, class resource_type, 
 	  class generator_type = constructor_caller<key_type, resource_type> >
 class singleton_resource_manager : public boost::noncopyable {
-   typedef boost::shared_ptr< resource_type > rp;
+   typedef std::shared_ptr< resource_type > rp;
 
    // registry
    std::map< key_type, rp > registry;

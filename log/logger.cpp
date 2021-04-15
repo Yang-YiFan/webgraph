@@ -38,7 +38,7 @@ const char* const LEVEL_NAMES[] = { "NONE", "STATUS", "DEBUG", "EVERYTHING", "MA
 const char* const DEFAULT_LOGGER_NAME = "LOG";
 const char* const DEFAULT_LOGGER_FILE = "LOG.txt";
 
-typedef map<string, boost::shared_ptr<module_logger> > logger_registry_t;
+typedef map<string, std::shared_ptr<module_logger> > logger_registry_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 /**

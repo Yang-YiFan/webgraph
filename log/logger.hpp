@@ -94,7 +94,7 @@ public:
                       const log_level_t );
 private:
    log_level_t parent_log_level();
-   typedef std::map<std::string, boost::shared_ptr<module_logger> > logger_registry_t;
+   typedef std::map<std::string, std::shared_ptr<module_logger> > logger_registry_t;
    friend logger_registry_t& get_registry();
 };
 

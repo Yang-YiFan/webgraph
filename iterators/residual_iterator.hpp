@@ -45,11 +45,11 @@ private:
    int prev;
    unsigned int i;
    const webgraph::bv_graph::graph* owner;
-   boost::shared_ptr<ibitstream> ibs;
+   std::shared_ptr<ibitstream> ibs;
    
 public:
    residual_iterator( int n, int res_left, 
-                      const webgraph::bv_graph::graph* o, boost::shared_ptr<ibitstream> i ) :
+                      const webgraph::bv_graph::graph* o, std::shared_ptr<ibitstream> i ) :
       node(n), prev(-1), i( res_left ), owner(o), ibs(i) {}
 
    bool has_next() const  {

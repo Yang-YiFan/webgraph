@@ -42,16 +42,16 @@
 
 
 // template<class graph_type>
-// void do_conversion_edge( typename boost::shared_ptr<graph_type> gp,
+// void do_conversion_edge( typename std::shared_ptr<graph_type> gp,
 //                          std::ofstream& out );
 
 template<class graph_type>
-void do_conversion_vertex( boost::shared_ptr<graph_type> gp,
+void do_conversion_vertex( std::shared_ptr<graph_type> gp,
                            std::ofstream& out );
 
 int main(int argc, char** argv) {
    typedef webgraph::bv_graph::graph graph;
-   typedef boost::shared_ptr<graph> graph_ptr;
+   typedef std::shared_ptr<graph> graph_ptr;
    namespace po = boost::program_options;
    using namespace std;
 
@@ -115,7 +115,7 @@ int main(int argc, char** argv) {
 
 /* Too annoying.
 template<class graph_type>
-void do_conversion_edge( typename boost::shared_ptr<graph_type> gp,
+void do_conversion_edge( typename std::shared_ptr<graph_type> gp,
                          std::ofstream& out ) {
 
    using namespace std;
@@ -150,7 +150,7 @@ void do_conversion_edge( typename boost::shared_ptr<graph_type> gp,
 */
 
 template<class graph_type>
-void do_conversion_vertex( boost::shared_ptr<graph_type> gp,
+void do_conversion_vertex( std::shared_ptr<graph_type> gp,
                            std::ofstream& out ) {
    using namespace std;
 

@@ -36,7 +36,7 @@ namespace webgraph { namespace bv_graph {
 
 using namespace utility_iterators;
 
-node_iterator::node_iterator( const graph* owner, boost::shared_ptr<ibitstream> is, 
+node_iterator::node_iterator( const graph* owner, std::shared_ptr<ibitstream> is, 
                               int from, int window_size ) :
       ibs(is) {
       this->from = from;

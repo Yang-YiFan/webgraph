@@ -72,7 +72,7 @@ int main( int argc, char** argv ) {
 
    typedef merged_iterator<int> mi_t;
    typedef webgraph::bv_graph::iterator_wrappers::cpp_to_java< vector<int>::iterator, int > wrapper_t;
-   typedef boost::shared_ptr<wrapper_t> wrapper_ptr;
+   typedef std::shared_ptr<wrapper_t> wrapper_ptr;
 
    wrapper_ptr x0_wrap( new wrapper_t(x0.begin(), x0.end()) );
    wrapper_ptr x1_wrap( new wrapper_t(x1.begin(), x1.end()) );

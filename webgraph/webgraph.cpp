@@ -750,7 +750,7 @@ graph::succ_itor_pair graph::get_successors( int x ) const {
  */
 graph::internal_succ_itor_ptr graph::get_successors_internal( int x ) const {
    assert( in_memory ); // do this for now
-   boost::shared_ptr<ibitstream> ibs( new ibitstream(graph_memory_ptr) );
+   std::shared_ptr<ibitstream> ibs( new ibitstream(graph_memory_ptr) );
    
    //ibitstream ibs = in_memory ? ibitstream( graph_memory ) : //ibitstream( ArrayInputStream( *graph_stream ) );
    
@@ -804,7 +804,7 @@ graph::internal_succ_itor_ptr graph::get_successors_internal( int x ) const {
  *       
  */
 graph::internal_succ_itor_ptr graph::get_successors_internal( int x, 
-                                                              boost::shared_ptr<ibitstream> ibs,
+                                                              std::shared_ptr<ibitstream> ibs,
                                                               vector<vector<int> >& window, 
                                                               vector<int>& outd, 
                                                               vector<int>& block_outdegrees ) 
@@ -1035,7 +1035,7 @@ const
  */
    
 pair<node_iterator, node_iterator> graph::get_node_iterator( int from ) const {
-   typedef boost::shared_ptr<ibitstream> ibs_ptr;
+   typedef std::shared_ptr<ibitstream> ibs_ptr;
 
    if( offset_step == -1 ) {
       return make_pair( node_iterator( this, 
@@ -1785,7 +1785,7 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
  * TODO this must be re-written to deal with Boost 
  */
 //void graph::store( 
-//    boost::shared_ptr<graph> g, string basename,
+//    std::shared_ptr<graph> g, string basename,
 //    int window_size, int max_ref_count, int min_interval_length, 
 //    int zeta_k, int flags, ostream* log = NULL ) {
 //      BVGraph g = new BVGraph();
@@ -1826,7 +1826,7 @@ void graph::store_offline_graph(
         << zeta_k << ", " << flags << ") " << "\n";
 #endif
 
-   boost::shared_ptr<graph> me( new graph() );  
+   std::shared_ptr<graph> me( new graph() );  
     
    if ( window_size != -1 ) 
       me->window_size = window_size;
@@ -2050,7 +2050,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
                                           string basename, ostream* log ) {
    // Used for differential compression
    // TODO make this portable.
-   boost::shared_ptr<ostream> nos( new ofstream("/dev/null") );
+   std::shared_ptr<ostream> nos( new ofstream("/dev/null") );
 
 #ifndef CONFIG_FAST
    lg() << LEVEL_DEBUG << "store_offline_graph_internal( " << basename << " )\n";
@@ -2104,7 +2104,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
    //       pm.start();
    //    }
 
-   boost::shared_ptr<boost::progress_display> pp;
+   std::shared_ptr<boost::progress_display> pp;
 
    if( log != NULL ) {
       *log << "Compressing graph...\n";
