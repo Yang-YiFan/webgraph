@@ -143,7 +143,7 @@ string offline_vertex_iterator::as_str() const {
    // which might suggest boost (though largely compiled with gcc-5 ABI), the
    // string related part adopts the old ABI, since this function is only for
    // debugging purposes, just comment it out
-   /*ostringstream o;
+   ostringstream o;
    
    o << "ascii_graph::offline_vertex_iterator\n"
      << "\tcurrent_descriptor:\n\t" << current_descriptor.as_str() << "\n"
@@ -151,7 +151,7 @@ string offline_vertex_iterator::as_str() const {
      << "\tseek position: " << get_pos << "\n"
      << "\tis end marker?: " << end_marker << "\n";
    
-   return o.str();*/
+   return o.str();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
