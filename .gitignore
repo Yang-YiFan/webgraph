@@ -6,3 +6,4 @@ webgraph/iterators/tests/test_interval_sequence_iterator
 webgraph/iterators/tests/test_masked_iterator
 webgraph/iterators/tests/test_merged_iterator
 tests/compress_webgraph
+tests/print_webgraph

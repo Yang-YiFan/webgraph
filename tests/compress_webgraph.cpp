@@ -33,6 +33,7 @@
 #include <string>
 
 #include "../webgraph/webgraph.hpp"
+//#include "../benchmarks/timing.hpp"
 
 /** Reads an immutable graph and stores it as a {@link BVGraph}.
  */
@@ -154,6 +155,8 @@ int main( int argc, char** argv ) {
    // All options are now collected. Start doing the actual loading.
    ////////////////////////////////////////////////////////////////////////////////
 
+   //timing::time_t start = timimg::timer();
+
    namespace ag = webgraph::ascii_graph;
 
    ag::offline_graph graph = ag::offline_graph::load( src );
@@ -181,6 +184,10 @@ int main( int argc, char** argv ) {
 //       else System.err.println( "The sources graph is not a BVGraphn" );
       }
    }
+
+   //timimg::time_t stop = timing::timer();
+
+   //cout << timing::calculate_elapsed( start, stop );
 
    return 0;
 }

@@ -1,6 +1,6 @@
 # Tests makefile
 
-include ../../../flags.mk
+include ../../flags.mk
 
 all: test_merged_iterator test_masked_iterator test_interval_sequence_iterator
 
@@ -25,6 +25,7 @@ clean:
 	rm -f *.o
 	rm -f test_merged_iterator
 	rm -f test_masked_iterator
+	rm -f test_interval_sequence_iterator
 	rm -f core.*
 	rm -f *~
 

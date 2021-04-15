@@ -22,6 +22,7 @@
 #include <boost/shared_ptr.hpp>
 #include "../input_bitstream.hpp"
 #include "../output_bitstream.hpp"
+#include <stdint.h>
 
 void test_write(unsigned char* what, int num_bytes);
 void test_read(int num_bytes);
