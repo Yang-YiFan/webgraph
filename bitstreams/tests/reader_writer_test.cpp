@@ -26,9 +26,8 @@
 
 void test_write(unsigned char* what, int num_bytes);
 void test_read(int num_bytes);
-std::shared_ptr
-boost::shared_ptr<std::vectstd::shared_ptr > test_write_to_array( unsigned char* what, int num_bytes );
-void test_read_from_array( boost::shared_ptr< std::vector<unsigned char> >& data, int num_bytes );
+std::shared_ptr<std::vector<unsigned char> > test_write_to_array( unsigned char* what, int num_bytes );
+void test_read_from_array( std::shared_ptr< std::vector<unsigned char> >& data, int num_bytes );
 
 using namespace std;
 using namespace webgraph;
@@ -46,8 +45,7 @@ int main(int, char**) {
 	test_read( sizeof( somebits ) );
 
 	cerr << "Done with files.. now time for arrays.\n";
-std::shared_ptr
-	boost::shared_ptr< vector<unsigned char> > res = test_write_to_array( b, sizeof(somebits) );
+	std::shared_ptr< vector<unsigned char> > res = test_write_to_array( b, sizeof(somebits) );
 	
 	cerr << "We've written .. now let's see how it looks.\n";
     cerr << "The bytes of res[] are " << endl;
@@ -93,9 +91,9 @@ void test_read(int num_bytes) {
 
 /**
  * test writing to array
-std::shared_ptr
-bstd::shared_ptr std::vector<unsigned char> > test_write_to_array( unsigned char* what, int num_bytes ) {
-	boost::shared_ptr< std::vector<unsigned char> > ary( new std::vector<unsigned char>(num_bytes) );
+ */
+std::shared_ptr< std::vector<unsigned char> > test_write_to_array( unsigned char* what, int num_bytes ) {
+	std::shared_ptr< std::vector<unsigned char> > ary( new std::vector<unsigned char>(num_bytes) );
 	
 	obitstream obs( ary );
 	
@@ -112,8 +110,8 @@ bstd::shared_ptr std::vector<unsigned char> > test_write_to_array( unsigned char
 
 /**
  * test reading from array
- */std::shared_ptr
-void test_read_from_array( boost::shared_ptr< std::vector<unsigned char> >& data, int num_bytes ) {
+ */
+void test_read_from_array( std::shared_ptr< std::vector<unsigned char> >& data, int num_bytes ) {
 	ibitstream ibs( data );
 	
 	unsigned char* b = new unsigned char[num_bytes];
