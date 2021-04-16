@@ -133,7 +133,7 @@ public:
    typedef webgraph::bv_graph::iterator_wrappers::java_to_cpp<int> succ_itor_wrapper;
    std::pair<succ_itor_wrapper, succ_itor_wrapper> successors();
 
-   std::vector<unsigned int>& successor_vector();
+   const std::vector<int>& successor_vector();
    int outdegree();
    friend class graph;
 };

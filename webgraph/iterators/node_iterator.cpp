@@ -158,10 +158,10 @@ graph::succ_itor_pair node_iterator::successors() {
 }
 
 
-std::vector<unsigned int>& node_iterator::successor_vector() {
+const std::vector<int>& node_iterator::successor_vector() {
    assert( curr != from - 1 );
    
-   vector<unsigned int> retval = window[ curr % cyclic_buffer_size ];
+   vector<int> retval = window[ curr % cyclic_buffer_size ];
 
    retval.resize( outd[ curr % cyclic_buffer_size ] );
 

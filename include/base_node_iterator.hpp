@@ -9,8 +9,8 @@ namespace webgraph {
 
 class base_node_iterator {
     public:
-        virtual std::vector<unsigned int>& successor_vector() = 0;
-        virtual int outdegree();
+        //virtual const std::vector<unsigned int>& successor_vector() = 0;
+        virtual int outdegree() = 0;
 };
 } // namespace webgraph
 
