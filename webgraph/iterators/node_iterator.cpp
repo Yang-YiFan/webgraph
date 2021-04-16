@@ -168,10 +168,10 @@ vector<int> successor_vector( const node_iterator& itor ) {
    return retval;
 }
    
-int outdegree( const node_iterator& itor ) {
-   assert( itor.curr != itor.from - 1 );
+int node_iterator::outdegree() {
+   assert( curr != from - 1 );
 
-   return itor.outd[ itor.curr % itor.cyclic_buffer_size ];
+   return outd[ curr % cyclic_buffer_size ];
 }
 
 } }

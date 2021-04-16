@@ -133,11 +133,12 @@ public:
    friend std::pair<succ_itor_wrapper, succ_itor_wrapper> successors( node_iterator& rhs );
 
    friend std::vector<int> successor_vector( const node_iterator& rhs );
-   friend int outdegree( const node_iterator& rhs );
+   int outdegree();
+   //friend int outdegree( const node_iterator& rhs );
    friend class graph;
 };
 
-int outdegree( const node_iterator& itor );
+//int outdegree( const node_iterator& itor );
 
 } }
 

@@ -57,7 +57,7 @@ int main( int argc, char** argv ) {
 //       tie( succ, succ_end ) = successors( n );
       vector<int> succ = successor_vector( n );
       
-//      cerr << "outdegree : " << outdegree(n) << endl;
+//      cerr << "outdegree : " << n.outdegree() << endl;
 
 //      cerr << "********************   " << *n << "\n";
 

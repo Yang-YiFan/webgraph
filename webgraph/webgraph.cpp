@@ -1915,7 +1915,7 @@ void graph::store_offline_graph(
 //      
 //      // TODO get this to work with both asciigraph, bvgraph, and BGL
 //      // find the lcd and stick with it....
-//      outd = outdegree(node_itor); // get the number of successors of currNode
+//      outd = node_itor.outdegree(); // get the number of successors of currNode
 //      curr_index = curr_node % cyclic_buffer_size;
 //
 //      
@@ -2126,7 +2126,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 
       // TODO get this to work with both asciigraph, bvgraph, and BGL
       // find the lcd and stick with it....
-      outd = webgraph::ascii_graph::outdegree(node_itor); // get the number of successors of currNode
+      outd = node_itor.outdegree(); // get the number of successors of currNode
       curr_index = curr_node % cyclic_buffer_size;
 
 #ifndef CONFIG_FAST
@@ -2276,7 +2276,7 @@ void graph::write_offsets( obitstream& obs, ostream* log ) {
       write_offset( obs, (int)( node_itor.ibs->get_read_bits() - last_offset ) );
       last_offset = node_itor.ibs->get_read_bits();
       ++node_itor;
-      bv_graph::outdegree( node_itor );
+      node_itor.outdegree();
       successor_vector( node_itor );
 //      if ( pm != null ) pm.update();
    }

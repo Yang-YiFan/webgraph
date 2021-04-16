@@ -163,9 +163,13 @@ offline_vertex_iterator::~offline_vertex_iterator()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int outdegree( const offline_vertex_iterator& me ) {
-   return me.current_descriptor.get_successors().size();   
+int offline_vertex_iterator::outdegree() {
+   return current_descriptor.get_successors().size();
 }
+
+//int outdegree( const offline_vertex_iterator& me ) {
+//   return me.current_descriptor.get_successors().size();
+//}
       
 ////////////////////////////////////////////////////////////////////////////////
 const std::vector<vertex_label_t>& successors( const offline_vertex_iterator& me ) {

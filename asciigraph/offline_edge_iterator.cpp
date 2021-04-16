@@ -46,18 +46,18 @@ offline_edge_iterator::offline_edge_iterator()
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Construct an iterator given just the filename containing the adjacency relationship.
-offline_edge_iterator::offline_edge_iterator(const char* filename) : 
+offline_edge_iterator::offline_edge_iterator(const char* filename) :
 	current_vertex(filename), last_vertex()
 {
    is_end_marker = false;
-   
+
    ifstream getnumv( filename );
    unsigned long numv;
 
    getnumv >> numv;
 
    this->num_vertices = numv;
-	
+
    // this assumes there will be at least one vertex in the graph, so
    assert( num_vertices >= 1 );
 
@@ -85,53 +85,52 @@ offline_edge_iterator::operator = (const offline_edge_iterator& rhs ) {
 
    return *this;
 }
-                                                                   
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Common private method called whenever the iterator needs to be advanced.
 
 void offline_edge_iterator::fetch_next_edge() {
    assert( !is_end_marker );
-	
+
    // Check to see if the current vertex has another successor.
    // current_successor++;
-   if( current_successor_index < outdegree(current_vertex) ) {
+   if( current_successor_index < current_vertex.outdegree() ) {
       ++current_successor_index;
 #ifdef DEBUG
       cerr << "fetch_next_edge\n"
-           << "\tIncrementing current successor index. it's now " 
+           << "\tIncrementing current successor index. it's now "
            << current_successor_index << endl
            << "\tThis is because vertex is : " << current_vertex.as_str()
-           << "\toutdegree(vertex) : " << outdegree(current_vertex)
+           << "\toutdegree(vertex) : " << current_vertex.outdegree()
            << endl;
 #endif
    }
 
    // check to see if we've run out of successors for the current node. If we have, increment -
    // also skip any successor-less nodes.
-	
-   while( current_successor_index == outdegree(current_vertex) ) {
+
+   while( current_successor_index == current_vertex.outdegree() ) {
       ++current_vertex;
-		current_successor_index = 0;
-      	 
+      current_successor_index = 0;
+
       if( current_vertex == last_vertex ) {
          // then we're at the end of the graph
          this->is_end_marker = true;
-         return;	
+         return;
       }
 #ifdef DEBUG
       cerr << "fetch_next_edge:\n"
-           << "Incrementing vertex. New vertex is " 
+           << "Incrementing vertex. New vertex is "
            << current_vertex.as_str()
            << endl;
 #endif
    }
-	
+
    // Sanity checks.
    assert( 0 <= successors(current_vertex)[0] );
    assert( successors(current_vertex)[0] < num_vertices );
 
-   current_edge = make_pair( *current_vertex, 
+   current_edge = make_pair( *current_vertex,
                              successors(current_vertex)[current_successor_index] );
 
 #ifdef DEBUG
