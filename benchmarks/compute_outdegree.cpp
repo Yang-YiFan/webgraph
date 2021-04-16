@@ -5,8 +5,8 @@
 #include <numeric>
 #include <iostream>
 
-#include "../webgraph/webgraph.hpp"
-#include "../webgraph/boost/integration.hpp"
+#include "webgraph/webgraph.hpp"
+#include "webgraph/boost/integration.hpp"
 
 #include "timing.hpp"
 

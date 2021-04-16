@@ -24,7 +24,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/tuple/tuple.hpp>
 
-#include "../webgraph/webgraph.hpp"
+#include "webgraph/webgraph.hpp"
 
 int main( int argc, char** argv ) {
    using namespace std;

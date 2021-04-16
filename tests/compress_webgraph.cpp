@@ -32,7 +32,7 @@
 #include <iostream>
 #include <string>
 
-#include "../webgraph/webgraph.hpp"
+#include "webgraph/webgraph.hpp"
 //#include "../benchmarks/timing.hpp"
 
 /** Reads an immutable graph and stores it as a {@link BVGraph}.

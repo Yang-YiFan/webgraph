@@ -1,5 +1,6 @@
 .svn
 .vscode
+build/
 **.o
 libwebgraph.a
 bitstreams/tests/reader_writer_test
