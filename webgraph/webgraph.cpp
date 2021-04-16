@@ -1567,9 +1567,9 @@ int graph::intervalize( const vector<int>& x,
  * @return the number of bits written.
  */
 
-int graph::differentially_compress( obitstream& obs, int curr_node, int ref, 
-                                    vector<unsigned int>& ref_list, int ref_len, 
-                                    vector<unsigned int>& curr_list, 
+int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
+                                    vector<int>& ref_list, int ref_len,
+                                    vector<int>& curr_list,
                                     int curr_len, bool for_real )
 {
 #ifndef CONFIG_FAST
@@ -2095,9 +2095,9 @@ void graph::store_offline_graph_internal( GraphType _graph,
    int cyclic_buffer_size = window_size + 1;
 
    // Cyclic array of previous lists.
-   vector<vector<unsigned int> > lst( cyclic_buffer_size );
+   vector<vector<int> > lst( cyclic_buffer_size );
    
-   for( vector<vector<unsigned int> >::iterator i = lst.begin(); i != lst.end(); i++ ) 
+   for( vector<vector<int> >::iterator i = lst.begin(); i != lst.end(); i++ )
       i->resize( INITIAL_SUCCESSOR_LIST_LENGTH );
    
    // For each list, its length.

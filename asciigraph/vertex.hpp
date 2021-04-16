@@ -30,7 +30,7 @@
 
 namespace webgraph { namespace ascii_graph {
 
-typedef unsigned int vertex_label_t;
+typedef int vertex_label_t;
 
 // A vertex is described by both its label (v) and its successors
 class vertex_descriptor {

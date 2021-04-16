@@ -88,7 +88,7 @@ void node_iterator::increment() {
       int cur_index = ++curr % cyclic_buffer_size;
 
       graph::internal_succ_itor_ptr itor;
-      
+
       itor = owner->get_successors_internal( curr, ibs, window, outd, block_outdegrees );
       
       if( window[cur_index].size() < (unsigned)outd[cur_index] )
@@ -161,7 +161,7 @@ graph::succ_itor_pair node_iterator::successors() {
 const std::vector<int>& node_iterator::successor_vector() {
    assert( curr != from - 1 );
    
-   vector<int> retval = window[ curr % cyclic_buffer_size ];
+   vector<int>& retval = window[ curr % cyclic_buffer_size ];
 
    retval.resize( outd[ curr % cyclic_buffer_size ] );
 

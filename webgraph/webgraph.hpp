@@ -384,9 +384,9 @@ protected:
                            std::vector<int>& residuals );
 
 private: 
-   int differentially_compress( obitstream& obs, int current_node, int ref, 
-                                std::vector<unsigned int>& ref_list, int ref_length, 
-                                std::vector<unsigned int>& current_list, 
+   int differentially_compress( obitstream& obs, int current_node, int ref,
+                                std::vector<int>& ref_list, int ref_length,
+                                std::vector<int>& current_list,
                                 int current_len, bool for_real );
 
 public:
