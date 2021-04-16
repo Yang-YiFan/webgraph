@@ -393,13 +393,15 @@ public:
 //                      basename, int window_size, int max_ref_count,
 //                      int min_interval_length, int zeta_k, int
 //                      flags, std::ostream* log = NULL );
-   static void store_offline_graph( webgraph::ascii_graph::offline_graph graph, 
+   template<class GraphType>
+   static void store_offline_graph( GraphType _graph,
                                     std::string basename, int window_size, int max_ref_count, 
                                     int min_interval_length, int zeta_k, int flags, std::ostream* log = NULL );
 
 private:
 //   void store_internal( std::shared_ptr<graph> graph, std::string basename, std::ostream* log = NULL );
-   void store_offline_graph_internal( webgraph::ascii_graph::offline_graph graph, 
+   template<class GraphType>
+   void store_offline_graph_internal( GraphType _graph,
                                       std::string basename, 
                                       std::ostream* log = NULL );
         

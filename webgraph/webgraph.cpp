@@ -219,6 +219,17 @@ using namespace logs;
 
 using namespace std;
 
+// instantiate template function
+template void graph::store_offline_graph<webgraph::ascii_graph::offline_graph>
+                  ( webgraph::ascii_graph::offline_graph _graph,
+                    std::string basename, int window_size, int max_ref_count,
+                    int min_interval_length, int zeta_k, int flags, std::ostream* log = NULL );
+
+template void graph::store_offline_graph_internal<webgraph::ascii_graph::offline_graph>
+                  ( webgraph::ascii_graph::offline_graph _graph,
+                    std::string basename,
+                    std::ostream* log = NULL );
+
 
 // VARIABLES LIVE HERE
 const int graph::DEFAULT_MAX_REF_COUNT = std::numeric_limits<int>::max();
@@ -1813,8 +1824,9 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
  *
  * TODO throw this away eventually.
  */
+template<class GraphType>
 void graph::store_offline_graph( 
-   webgraph::ascii_graph::offline_graph g, string basename,
+   GraphType _graph, string basename,
    int window_size, int max_ref_count, int min_interval_length, 
    int zeta_k, int flags, ostream* log ) {
 
@@ -1842,7 +1854,7 @@ void graph::store_offline_graph(
       
    me->set_flags( flags );
    // TODO change this
-   me->store_offline_graph_internal( g, basename, log );
+   me->store_offline_graph_internal<GraphType>( _graph, basename, log );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2046,7 +2058,8 @@ void graph::store_offline_graph(
  * <code>null</code> if no metering is required.
  * @throws IOException if some exception is raised while writing the graph.
  */
-void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph olg, 
+template<class GraphType>
+void graph::store_offline_graph_internal( GraphType _graph,
                                           string basename, ostream* log ) {
    // Used for differential compression
    // TODO make this portable.
@@ -2057,10 +2070,8 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 #endif
    obitstream bit_count( nos, 0  );
 
-   typedef webgraph::ascii_graph::offline_graph graph_type;
-
    unsigned int outd;
-   int curr_node, curr_index, j, best, best_index, cand, t = 0, n = olg.get_num_nodes();
+   int curr_node, curr_index, j, best, best_index, cand, t = 0, n = _graph.get_num_nodes();
    long bit_offset = 0;
 
    obitstream graph_obs( basename + ".graph", STD_BUFFER_SIZE );
@@ -2108,12 +2119,12 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 
    if( log != NULL ) {
       *log << "Compressing graph...\n";
-      pp.reset( new boost::progress_display( olg.get_num_nodes(), *log ) );
+      pp.reset( new boost::progress_display( _graph.get_num_nodes(), *log ) );
    }
 
    // We iterate over the nodes of graph
-   graph_type::node_iterator node_itor, node_itor_end;
-   for ( std::tie( node_itor, node_itor_end) = olg.get_node_iterator();
+   typename GraphType::node_iterator node_itor, node_itor_end;
+   for ( std::tie( node_itor, node_itor_end) = _graph.get_node_iterator();
          node_itor != node_itor_end;
          ++node_itor ) {
       // curr_node is the currently examined node, of outdegree outd, with index currIndex

@@ -165,9 +165,9 @@ int main( int argc, char** argv ) {
 
    if( dest != "" ) {
       cerr << "About to call store offline graph...\n";
-      bvg::graph::store_offline_graph( graph, dest, window_size, max_ref_count, 
-                                       min_interval_length, 
-                                       zeta_k, flags, log );
+      bvg::graph::store_offline_graph<ag::offline_graph>( graph, dest, window_size, max_ref_count,
+                                                          min_interval_length,
+                                                          zeta_k, flags, log );
    }
    else {
       if ( write_offsets ) {
