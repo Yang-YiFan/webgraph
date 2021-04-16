@@ -62,8 +62,8 @@ public:
    typedef vertex_descriptor vertex_type;
    typedef edge edge_type; 
         
-   pair<edge_iterator, edge_iterator> get_edge_iterator() const;
-   pair<vertex_iterator, vertex_iterator> get_vertex_iterator(int from = 0) const;
+   std::pair<edge_iterator, edge_iterator> get_edge_iterator() const;
+   std::pair<vertex_iterator, vertex_iterator> get_vertex_iterator(int from = 0) const;
    
    unsigned int get_num_nodes() const {
       return n;

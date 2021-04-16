@@ -67,7 +67,7 @@ offline_graph offline_graph::load( const string& basename ) {
    // now read number of edges
    result.num_edges = 0;
    edge_iterator b, e;
-   boost::tie( b, e ) = result.get_edge_iterator();
+   std::tie( b, e ) = result.get_edge_iterator();
    for( ; b != e; ++b ) {
       result.num_edges++;
    }
@@ -79,13 +79,13 @@ offline_graph offline_graph::load( const string& basename ) {
 /**
  * 
  */
-pair<offline_graph::vertex_iterator, offline_graph::vertex_iterator>
+std::pair<offline_graph::vertex_iterator, offline_graph::vertex_iterator>
 offline_graph::get_vertex_iterator ( int from ) const {
    if( from != 0 ) {
       cerr << "from is not implemented.\n";
    }
 
-   return make_pair( offline_vertex_iterator( filename.c_str() ),
+   return std::make_pair( offline_vertex_iterator( filename.c_str() ),
                      offline_vertex_iterator() );
 
 //   return make_pair(offline_vertex_iterator( filename.c_str(), from ), 
@@ -97,12 +97,12 @@ offline_graph::get_vertex_iterator ( int from ) const {
 /*!
  * \return A std::pair containing the beginning and end edge iterators.
  */
-pair<offline_graph::edge_iterator, offline_graph::edge_iterator> 
+std::pair<offline_graph::edge_iterator, offline_graph::edge_iterator>
 offline_graph::get_edge_iterator() const {
    edge_iterator begin( filename.c_str() ); 
    edge_iterator end;
    
-   return make_pair( begin, end );
+   return std::make_pair( begin, end );
 }
 
 } }

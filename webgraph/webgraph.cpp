@@ -1034,11 +1034,11 @@ const
  *  NodeIterator} for accessing nodes and successors sequentially.
  */
    
-pair<node_iterator, node_iterator> graph::get_node_iterator( int from ) const {
+std::pair<node_iterator, node_iterator> graph::get_node_iterator( int from ) const {
    typedef std::shared_ptr<ibitstream> ibs_ptr;
 
    if( offset_step == -1 ) {
-      return make_pair( node_iterator( this, 
+      return std::make_pair( node_iterator( this,
                                        ibs_ptr(new ibitstream(basename + ".graph", 
                                                               STD_BUFFER_SIZE) ),
                                        from, 
@@ -1050,7 +1050,7 @@ pair<node_iterator, node_iterator> graph::get_node_iterator( int from ) const {
          cerr << "##################################################\n"
               << "Graph in memory\n";
 #endif
-         return make_pair( node_iterator( this,
+         return std::make_pair( node_iterator( this,
                                           ibs_ptr( new ibitstream(graph_memory_ptr) ),
                                           from,
                                           window_size ),
@@ -2113,7 +2113,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 
    // We iterate over the nodes of graph
    graph_type::node_iterator node_itor, node_itor_end;
-   for ( boost::tie( node_itor, node_itor_end) = olg.get_vertex_iterator(); 
+   for ( std::tie( node_itor, node_itor_end) = olg.get_vertex_iterator();
          node_itor != node_itor_end;
          ++node_itor ) {
       // curr_node is the currently examined node, of outdegree outd, with index currIndex
@@ -2265,7 +2265,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
 void graph::write_offsets( obitstream& obs, ostream* log ) {
    node_iterator node_itor, end;
    
-   boost::tie( node_itor, end ) = get_node_iterator( 0 );
+   std::tie( node_itor, end ) = get_node_iterator( 0 );
    
    int n = get_num_nodes();
    
