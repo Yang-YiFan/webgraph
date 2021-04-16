@@ -31,6 +31,7 @@
 #include <cassert>
 
 #include <iostream>
+#include "base_node_iterator.hpp"
 
 namespace webgraph { namespace ascii_graph {
 
@@ -38,9 +39,7 @@ namespace webgraph { namespace ascii_graph {
       offline_vertex_iterator,
       vertex_descriptor,
       boost::forward_traversal_tag,
-      vertex_descriptor
-    >
-   {
+      vertex_descriptor>, public base_node_iterator {
    ////////////////////////////////////////////////////////////////////////////////
    // private section
    private:
@@ -83,7 +82,7 @@ namespace webgraph { namespace ascii_graph {
       offline_vertex_iterator& operator = ( const offline_vertex_iterator& rhs );
       
       int outdegree();
-      const std::vector<vertex_label_t>& successor_vector();
+      std::vector<vertex_label_t>& successor_vector();
 	
    ////////////////////////////////////////////////////////////////////////////////
    // Backing methods for iterator_facade

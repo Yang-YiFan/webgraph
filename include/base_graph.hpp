@@ -1,8 +1,7 @@
 #ifndef BASEGRAPH_HPP_
 #define BASEGRAPH_HPP_
 
-#include <string>
-#include <stdint.h>
+#include <utility>
 
 namespace webgraph {
 // offer base interface for all other graphs: ascii_graph, bv_graph

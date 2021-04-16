@@ -29,6 +29,7 @@
 #include "iterator_wrappers.hpp"
 #include "../../bitstreams/input_bitstream.hpp"
 #include "../../log/logger.hpp"
+#include "base_node_iterator.hpp"
 
 namespace webgraph { namespace bv_graph {
 
@@ -39,7 +40,7 @@ class node_iterator :
       node_iterator,
       int,
       boost::forward_traversal_tag,
-      int> {
+      int>, public base_node_iterator {
 private:
    int n; // = numNodes();
    
@@ -132,7 +133,7 @@ public:
    typedef webgraph::bv_graph::iterator_wrappers::java_to_cpp<int> succ_itor_wrapper;
    std::pair<succ_itor_wrapper, succ_itor_wrapper> successors();
 
-   std::vector<int> successor_vector();
+   std::vector<unsigned int>& successor_vector();
    int outdegree();
    friend class graph;
 };
