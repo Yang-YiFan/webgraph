@@ -15,7 +15,7 @@ int main( int argc, char** argv ) {
    using namespace boost;
    using webgraph::bv_graph::graph;
 
-   typedef shared_ptr<graph> graph_ptr;
+   typedef std::shared_ptr<graph> graph_ptr;
 
    timing::time_t start, end;
    start = timing::timer();

@@ -22,7 +22,7 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/graph/adjacency_iterator.hpp>
-#include <boost/property_map.hpp>
+#include <boost/property_map/property_map.hpp>
 #include <boost/graph/graph_concepts.hpp>
 
 #include <iostream>

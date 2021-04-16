@@ -25,7 +25,7 @@
 #include <cassert>
 
 #include "types.hpp"
-#include <webgraph/iterators/node_iterator.hpp>
+#include "../iterators/node_iterator.hpp"
 
 // TODO this will have to change to work with offline graphs.
 

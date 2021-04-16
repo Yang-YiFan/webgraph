@@ -31,9 +31,14 @@
 #include <sys/time.h>
 #include <iostream>
 
-#include <util/random_number_source.hpp>
+//#include <util/random_number_source.hpp>
 
 #include <boost/lexical_cast.hpp>
+
+template<int N>
+int my_rand() {
+    return rand() % N;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -66,8 +71,8 @@ int main( int argc, char** argv ) {
    
    srand( time(NULL) );
 
-   generate( call_sequence.begin(), call_sequence.end(), util::random_number_source(NUM_CALLERS) );
-   generate( params.begin(), params.end(), util::random_number_source(100) );
+   generate( call_sequence.begin(), call_sequence.end(), my_rand<NUM_CALLERS> );
+   generate( params.begin(), params.end(), my_rand<100> );
 
    for( size_t i = 0; i < params.size(); ++i ) {
       if( call_sequence[i] == 2 ) { // zeta_caller
