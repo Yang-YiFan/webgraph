@@ -4,6 +4,8 @@ build/
 **.o
 libwebgraph.a
 bitstreams/tests/reader_writer_test
+benchmarks/compute_indegree
+benchmarks/compute_outdegree
 webgraph/iterators/tests/test_interval_sequence_iterator
 webgraph/iterators/tests/test_masked_iterator
 webgraph/iterators/tests/test_merged_iterator

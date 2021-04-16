@@ -26,7 +26,7 @@
 namespace webgraph { namespace ascii_graph {
 
 ////////////////////////////////////////////////////////////////////////////////
-offline_graph::offline_graph() : n(0), num_edges(0)
+offline_graph::offline_graph() : n(0LL), num_edges(0LL)
 {
 }
 
@@ -45,27 +45,26 @@ offline_graph::~offline_graph()
 offline_graph offline_graph::load( const string& basename ) {
    // all this method does is a quick sanity check before setting up some state. 
    // Nothing is really read until iterators start getting created.
-  
+
    offline_graph result;
-  
+
    result.filename = basename + ".graph-txt";
-  
+
    ifstream file( result.filename.c_str() );
-  
+
    string nextline;
-        
+
    getline( file, nextline );
- 
+
    // read number of nodes
    istringstream nl( nextline );
         
    nl >> result.n;
-        
+
    assert( result.n > 0 );
-                
 
    // now read number of edges
-   result.num_edges = 0;
+   result.num_edges = 0LL;
    edge_iterator b, e;
    std::tie( b, e ) = result.get_edge_iterator();
    for( ; b != e; ++b ) {

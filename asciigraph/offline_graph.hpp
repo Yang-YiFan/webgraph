@@ -30,6 +30,7 @@
 #include "offline_vertex_iterator.hpp"
 #include "vertex.hpp"
 #include "edge.hpp"
+#include "base_graph.hpp"
 
 using namespace std;
 
@@ -39,36 +40,36 @@ namespace webgraph { namespace ascii_graph {
  * 
  * Access to members of the graph is through getting an iterator, then working with the iterator.
  */
-class offline_graph {
+class offline_graph : public base_graph<offline_vertex_iterator> {
    
 private:
    // Only used by static factory method load.
    offline_graph();
    
 protected:
-   unsigned int n; // num vertices
+   long n; // num vertices
+   long num_edges;
    string filename; // file containing the graph
-   unsigned int num_edges;
-   
+
 public:
    virtual ~offline_graph();
-        
+
    static offline_graph load( const string& basename );
-   
+
    typedef offline_edge_iterator edge_iterator;
    typedef offline_vertex_iterator node_iterator;
 
    typedef vertex_descriptor vertex_type;
    typedef edge edge_type; 
-        
+
    std::pair<edge_iterator, edge_iterator> get_edge_iterator() const;
    std::pair<node_iterator, node_iterator> get_node_iterator(int from = 0) const;
-   
-   unsigned int get_num_nodes() const {
+
+   long get_num_nodes() const {
       return n;
    }
 
-   unsigned int get_num_edges() const {
+   long get_num_edges() const {
       return num_edges;
    }
 };

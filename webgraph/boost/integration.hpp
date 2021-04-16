@@ -137,7 +137,7 @@ namespace boost {
    }
 
    bvg_traits::edges_size_type num_edges( const webgraph::bv_graph::graph& g ) {
-      return g.get_num_arcs();
+      return g.get_num_edges();
    }
 
 

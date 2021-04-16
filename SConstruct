@@ -42,11 +42,11 @@ env['CXX'] = env['CPP']
 
 env['DEBUG_FLAGS'] = ' '
 env['CFLAGS'] = ' -g -O3 -DCONFIG_FAST -funroll-loops -mfpmath=sse -mavx -Wall -fmax-errors=1'
-env['CPATH'] =  [root]
+env['CPATH'] =  [root, joinpath(root, 'include')]
 env['CPPFLAGS'] = env['CFLAGS']
 env['CPPPATH'] = env['CPATH']
 env['LIBS'] = []
-env['LIBPATH'] = [root]
+env['LIBPATH'] = [root, joinpath(root, 'include')]
 env['LINKFLAGS'] = " -g -Wl,-O3"
 
 # build static library

@@ -266,7 +266,7 @@ long graph::get_num_nodes() const {
    return n;
 }
 
-long graph::get_num_arcs() const {
+long graph::get_num_edges() const {
    return m;
 }
         
@@ -2071,8 +2071,8 @@ void graph::store_offline_graph_internal( GraphType _graph,
    obitstream bit_count( nos, 0  );
 
    unsigned int outd;
-   int curr_node, curr_index, j, best, best_index, cand, t = 0, n = _graph.get_num_nodes();
-   long bit_offset = 0;
+   int curr_node, curr_index, j, best, best_index, cand, t = 0;
+   long bit_offset = 0, n = _graph.get_num_nodes();
 
    obitstream graph_obs( basename + ".graph", STD_BUFFER_SIZE );
 //   ofstream cpp_obs_log( "cpp_obs_log.txt" );
@@ -2278,7 +2278,7 @@ void graph::write_offsets( obitstream& obs, ostream* log ) {
    
    std::tie( node_itor, end ) = get_node_iterator( 0 );
    
-   int n = get_num_nodes();
+   long n = get_num_nodes();
    
    long last_offset = 0;
    while( n-- != 0 ) {
