@@ -40,35 +40,35 @@ int main( int argc, char* argv[] ) {
       cerr << "Usage is " << argv[0] << " [graph-basename]" << endl;
       return 1;
    }
-        
+
    webgraph::ascii_graph::offline_graph o = offline_graph::load( argv[1] );
 
 //      print_first_n_edges( oag, 10 );
    print_all_vertices_and_edges( o );
-        
-   return 0;       
+
+   return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void print_first_n_edges( webgraph::ascii_graph::offline_graph o, int n ) {
    offline_graph::edge_iterator begin, end;
-        
-   tie( begin, end ) = o.get_edge_iterator();
-        
+
+   std::tie( begin, end ) = o.get_edge_iterator();
+
    cerr << "About to start printing first " << n << " edges.\n";
-        
+
    int i = 0;
-        
+
    for( offline_graph::edge_iterator iter = begin;
         iter != end && i < n;
         iter++, i++ ) {
       offline_graph::edge_type next_edge;
-                
+
       next_edge = *iter;
-                
-      cerr << "<" << next_edge.first << ", " << next_edge.second << ">";      
-   }       
-        
+
+      cerr << "<" << next_edge.first << ", " << next_edge.second << ">";
+   }
+
    cerr << "Done.\n";
 }
 
@@ -83,48 +83,48 @@ void print_all_vertices_and_edges( webgraph::ascii_graph::offline_graph oag ) {
 
 //   cerr << "Now tie them, and see what they look like afterwards.\n";
 
-   boost::tie( begin, end ) = oag.get_vertex_iterator();
+   std::tie( begin, end ) = oag.get_vertex_iterator();
 
 //   cerr << "Begin is " << begin.as_str();
-        
+
 //   cerr << " and end is " << end.as_str() << endl;
-        
+
    int i = 0;
-        
+
    cerr << "Vertices are: " << endl;
-        
+
    for( offline_graph::vertex_iterator iter = begin;
         iter != end;
         ++iter ) {
-                
+
       cerr << *iter << ": ";
-                
+
       ostream_iterator<int> meh( cerr, " " );
-                
-      copy( successors(iter).begin(), successors(iter).end(), meh );
-                
+
+      copy( iter.successor_vector().begin(), iter.successor_vector().end(), meh );
+
       cerr << endl;
    }
-        
+
    cerr << "\n**************************************\n";
-        
+
    cerr << "Now iterating over all edges. Here goes...\n";
-        
+
    offline_graph::edge_iterator e_begin, e_end;
-        
-   tie( e_begin, e_end ) = oag.get_edge_iterator();
-        
+
+   std::tie( e_begin, e_end ) = oag.get_edge_iterator();
+
    cerr << "Got edge iterator.\n";
-        
+
    i = 0;
-        
+
    for( offline_graph::edge_iterator iter = e_begin;
         iter != e_end;
         iter++) {
       offline_graph::edge_type edge = *iter;
-                
+
       cerr << "<" << edge.first << ", " << edge.second << ">\n";
    }
-   
+
    cerr << "Done." << endl;
 }

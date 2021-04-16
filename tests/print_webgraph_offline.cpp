@@ -45,7 +45,7 @@ int main( int argc, char** argv ) {
    
    graph::node_iterator n, n_end;
    
-   tie(n, n_end) = gp->get_node_iterator( 0 );
+   std::tie(n, n_end) = gp->get_node_iterator( 0 );
    
 //   cerr << "here are vertices:\n";
    
@@ -54,8 +54,8 @@ int main( int argc, char** argv ) {
    while( n != n_end ) {
 //       webgraph::bv_graph::graph::successor_iterator succ, succ_end;
 
-//       tie( succ, succ_end ) = successors( n );
-      vector<int> succ = successor_vector( n );
+//       std::tie( succ, succ_end ) = n.successors();
+      vector<int> succ = n.successor_vector();
       
 //      cerr << "outdegree : " << n.outdegree() << endl;
 

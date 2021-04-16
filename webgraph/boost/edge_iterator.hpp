@@ -52,7 +52,7 @@ namespace webgraph { namespace bv_graph { namespace boost_integration {
 
          do {
             
-            tie( s, s_end ) = successors( v );
+            tie( s, s_end ) = v.successors();
             current_vertex = *v;
             ++v;
          } while( s == s_end && v != v_end );
@@ -72,7 +72,7 @@ namespace webgraph { namespace bv_graph { namespace boost_integration {
          ++s;
 
          while( s == s_end && v != v_end ) {
-            tie( s, s_end ) = successors( v );
+            tie( s, s_end ) = v.successors();
             current_vertex = *v;
             ++v;
          }

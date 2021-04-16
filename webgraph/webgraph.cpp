@@ -1935,7 +1935,7 @@ void graph::store_offline_graph(
 //       lst[ curr_index ].resize( outd );
 //
 //      // The successor list we are going to compress and write out
-//      lst[curr_index] = successors_vector( node_itor );
+//      lst[curr_index] = node_itor.successor_vector();
 //      list_len[ curr_index ] = outd;
 //
 //      if ( outd > 0 ) {
@@ -2153,7 +2153,7 @@ void graph::store_offline_graph_internal( webgraph::ascii_graph::offline_graph o
          lst[ curr_index ].resize( outd );
 
       // The successor list we are going to compress and write out
-      lst[curr_index] = ascii_graph::successors( node_itor );
+      lst[curr_index] = node_itor.successor_vector();
       
       list_len[ curr_index ] = outd;
 
@@ -2277,7 +2277,7 @@ void graph::write_offsets( obitstream& obs, ostream* log ) {
       last_offset = node_itor.ibs->get_read_bits();
       ++node_itor;
       node_itor.outdegree();
-      successor_vector( node_itor );
+      node_itor.successor_vector();
 //      if ( pm != null ) pm.update();
    }
    write_offset( obs, (int)( node_itor.ibs->get_read_bits() - last_offset ) );

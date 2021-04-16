@@ -140,30 +140,30 @@ bool node_iterator::equal(const node_iterator& rhs ) const {
       owner == rhs.owner;
 }
 
-graph::succ_itor_pair successors( node_iterator& itor ) {
-   assert( itor.curr != itor.from - 1 );
+graph::succ_itor_pair node_iterator::successors() {
+   assert( curr != from - 1 );
 
-   int cur_index = itor.curr % itor.cyclic_buffer_size;
+   int cur_index = curr % cyclic_buffer_size;
    
    typedef iterator_wrappers::itor_capture_wrapper<vector<int>::iterator, int> itor_base;
    
-   itor_base ib( itor.window[cur_index].begin(), 0, itor.outd[cur_index] );
+   itor_base ib( window[cur_index].begin(), 0, outd[cur_index] );
    
    // now wrap the iterator and return
-   return make_pair( iterator_wrappers::java_to_cpp<int>( ib ),
-                     iterator_wrappers::java_to_cpp<int>() );
+   return std::make_pair( iterator_wrappers::java_to_cpp<int>( ib ),
+                          iterator_wrappers::java_to_cpp<int>() );
 
 //   return make_pair( successor_iterator_wrapper(base_pair.first),
 //                     successor_iterator_wrapper(base_pair.second) );
 }
 
 
-vector<int> successor_vector( const node_iterator& itor ) {
-   assert( itor.curr != itor.from - 1 );
+vector<int> node_iterator::successor_vector() {
+   assert( curr != from - 1 );
    
-   vector<int> retval = itor.window[ itor.curr % itor.cyclic_buffer_size ];
+   vector<int> retval = window[ curr % cyclic_buffer_size ];
 
-   retval.resize( itor.outd[ itor.curr % itor.cyclic_buffer_size ] );
+   retval.resize( outd[ curr % cyclic_buffer_size ] );
 
    return retval;
 }

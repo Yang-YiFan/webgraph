@@ -83,8 +83,7 @@ namespace webgraph { namespace ascii_graph {
       offline_vertex_iterator& operator = ( const offline_vertex_iterator& rhs );
       
       int outdegree();
-      //friend int outdegree( const offline_vertex_iterator& me );
-      friend const std::vector<vertex_label_t>& successors( const offline_vertex_iterator& me );
+      const std::vector<vertex_label_t>& successor_vector();
 	
    ////////////////////////////////////////////////////////////////////////////////
    // Backing methods for iterator_facade
@@ -117,9 +116,6 @@ namespace webgraph { namespace ascii_graph {
          return current_descriptor;
       }
    };
-
-   //int outdegree( const offline_vertex_iterator& me );
-   const std::vector<vertex_label_t>& successors( const offline_vertex_iterator& me );
 
 } }
 
