@@ -56,14 +56,13 @@ public:
    static offline_graph load( const string& basename );
    
    typedef offline_edge_iterator edge_iterator;
-   typedef offline_vertex_iterator vertex_iterator;
    typedef offline_vertex_iterator node_iterator;
 
    typedef vertex_descriptor vertex_type;
    typedef edge edge_type; 
         
    std::pair<edge_iterator, edge_iterator> get_edge_iterator() const;
-   std::pair<vertex_iterator, vertex_iterator> get_vertex_iterator(int from = 0) const;
+   std::pair<node_iterator, node_iterator> get_node_iterator(int from = 0) const;
    
    unsigned int get_num_nodes() const {
       return n;

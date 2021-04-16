@@ -61,7 +61,7 @@ namespace boost {
       /*! vertex_iterator - required by VertexListGraph concept
        *
        */
-      typedef ag::offline_vertex_iterator vertex_iterator;
+      typedef ag::node_iterator vertex_iterator;
       typedef unsigned int vertices_size_type;
       
       ////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +149,7 @@ namespace boost {
    std::pair< graph_traits<webgraph::ascii_graph::offline_graph>::vertex_iterator,
               graph_traits<webgraph::ascii_graph::offline_graph>::vertex_iterator >
    vertices( const webgraph::ascii_graph::offline_graph& g ) {
-      return g.get_vertex_iterator( 0 );
+      return g.get_node_iterator( 0 );
    }
    
    graph_traits<webgraph::ascii_graph::offline_graph>::vertices_size_type 

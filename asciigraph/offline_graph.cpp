@@ -79,14 +79,14 @@ offline_graph offline_graph::load( const string& basename ) {
 /**
  * 
  */
-std::pair<offline_graph::vertex_iterator, offline_graph::vertex_iterator>
-offline_graph::get_vertex_iterator ( int from ) const {
+std::pair<offline_graph::node_iterator, offline_graph::node_iterator>
+offline_graph::get_node_iterator ( int from ) const {
    if( from != 0 ) {
       cerr << "from is not implemented.\n";
    }
 
    return std::make_pair( offline_vertex_iterator( filename.c_str() ),
-                     offline_vertex_iterator() );
+                          offline_vertex_iterator() );
 
 //   return make_pair(offline_vertex_iterator( filename.c_str(), from ), 
 //		    offline_vertex_iterator(filename.c_str(), n));

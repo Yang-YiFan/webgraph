@@ -75,15 +75,15 @@ void print_first_n_edges( webgraph::ascii_graph::offline_graph o, int n ) {
 ////////////////////////////////////////////////////////////////////////////////
 void print_all_vertices_and_edges( webgraph::ascii_graph::offline_graph oag ) {
 	using namespace webgraph::ascii_graph;
-   offline_graph::vertex_iterator begin, end;
+   offline_graph::node_iterator begin, end;
 
 //   cerr << "This is what they look like, straight out of th graph.\n";
-//   cerr << o.get_vertex_iterator().first.as_str() << endl;
-//   cerr << o.get_vertex_iterator().second.as_str() << endl;
+//   cerr << o.get_node_iterator().first.as_str() << endl;
+//   cerr << o.get_node_iterator().second.as_str() << endl;
 
 //   cerr << "Now tie them, and see what they look like afterwards.\n";
 
-   std::tie( begin, end ) = oag.get_vertex_iterator();
+   std::tie( begin, end ) = oag.get_node_iterator();
 
 //   cerr << "Begin is " << begin.as_str();
 
@@ -93,7 +93,7 @@ void print_all_vertices_and_edges( webgraph::ascii_graph::offline_graph oag ) {
 
    cerr << "Vertices are: " << endl;
 
-   for( offline_graph::vertex_iterator iter = begin;
+   for( offline_graph::node_iterator iter = begin;
         iter != end;
         ++iter ) {
 
