@@ -12,7 +12,7 @@ class csr_node_iterator : public boost::iterator_facade<
         csr_node_iterator,
         vertex_label_t,
         boost::forward_traversal_tag,
-        vertex_label_t>, public base_node_iterator {
+        vertex_label_t>, public base_node_iterator<csr_node_iterator> {
 
     private:
         long numVertices;

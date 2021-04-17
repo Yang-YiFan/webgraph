@@ -39,7 +39,7 @@ namespace webgraph { namespace ascii_graph {
       offline_vertex_iterator,
       vertex_descriptor,
       boost::forward_traversal_tag,
-      vertex_descriptor>, public base_node_iterator {
+      vertex_descriptor>, public base_node_iterator<offline_vertex_iterator> {
    ////////////////////////////////////////////////////////////////////////////////
    // private section
    private:

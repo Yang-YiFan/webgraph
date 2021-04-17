@@ -39,7 +39,7 @@ class node_iterator :
       node_iterator,
       int,
       boost::forward_traversal_tag,
-      int>, public base_node_iterator {
+      int>, public base_node_iterator<node_iterator> {
 private:
    int n; // = numNodes();
    
