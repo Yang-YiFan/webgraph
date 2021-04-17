@@ -45,7 +45,7 @@ node_iterator::node_iterator( const graph* owner, std::shared_ptr<ibitstream> is
       this->n = owner->get_num_nodes();
       this->end_marker = false;
       this->window.resize( cyclic_buffer_size );
-      for( vector< vector<int> >::iterator itor = window.begin();
+      for( vector< vector<vertex_label_t> >::iterator itor = window.begin();
            itor != window.end();
            itor++ ) {
          itor->resize( graph::INITIAL_SUCCESSOR_LIST_LENGTH );
@@ -94,10 +94,10 @@ void node_iterator::increment() {
       if( window[cur_index].size() < (unsigned)outd[cur_index] )
          window[cur_index ].resize( outd[cur_index] );
   
-      vector<int>::iterator i = window[cur_index].begin();
+      vector<vertex_label_t>::iterator i = window[cur_index].begin();
 
       while( itor->has_next() ) {
-         *i = itor->next();
+         *i = itor->next(); // this actually populates successor list
 #ifndef CONFIG_FAST
          logs::logger( "iterators" ) << logs::LEVEL_EVERYTHING
                                      << "node iterator - succ list so far: " << *i << "\n";
@@ -145,23 +145,23 @@ graph::succ_itor_pair node_iterator::successors() {
 
    int cur_index = curr % cyclic_buffer_size;
    
-   typedef iterator_wrappers::itor_capture_wrapper<vector<int>::iterator, int> itor_base;
+   typedef iterator_wrappers::itor_capture_wrapper<vector<vertex_label_t>::iterator, vertex_label_t> itor_base;
    
    itor_base ib( window[cur_index].begin(), 0, outd[cur_index] );
    
    // now wrap the iterator and return
-   return std::make_pair( iterator_wrappers::java_to_cpp<int>( ib ),
-                          iterator_wrappers::java_to_cpp<int>() );
+   return std::make_pair( iterator_wrappers::java_to_cpp<vertex_label_t>( ib ),
+                          iterator_wrappers::java_to_cpp<vertex_label_t>() );
 
 //   return make_pair( successor_iterator_wrapper(base_pair.first),
 //                     successor_iterator_wrapper(base_pair.second) );
 }
 
 
-const std::vector<int>& node_iterator::successor_vector() {
+const std::vector<vertex_label_t>& node_iterator::successor_vector() {
    assert( curr != from - 1 );
    
-   vector<int>& retval = window[ curr % cyclic_buffer_size ];
+   vector<vertex_label_t>& retval = window[ curr % cyclic_buffer_size ];
 
    retval.resize( outd[ curr % cyclic_buffer_size ] );
 

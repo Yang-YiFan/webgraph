@@ -749,8 +749,8 @@ graph::succ_itor_pair graph::get_successors( int x ) const {
 
    internal_succ_itor_ptr p = get_successors_internal( x );
 
-   return make_pair( iterator_wrappers::java_to_cpp<int>( p ), 
-                     iterator_wrappers::java_to_cpp<int>() );
+   return make_pair( iterator_wrappers::java_to_cpp<vertex_label_t>( p ),
+                     iterator_wrappers::java_to_cpp<vertex_label_t>() );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -765,7 +765,7 @@ graph::internal_succ_itor_ptr graph::get_successors_internal( int x ) const {
    
    //ibitstream ibs = in_memory ? ibitstream( graph_memory ) : //ibitstream( ArrayInputStream( *graph_stream ) );
    
-   vector<vector<int> > blah1(0);
+   vector<vector<vertex_label_t> > blah1(0);
    vector<int> blah(0);
    
    internal_succ_itor_ptr p = get_successors_internal( x, ibs, blah1, blah, blah );
@@ -814,11 +814,11 @@ graph::internal_succ_itor_ptr graph::get_successors_internal( int x ) const {
  * <code>null</code> and @link #offset_step is 0.
  *       
  */
-graph::internal_succ_itor_ptr graph::get_successors_internal( int x, 
+graph::internal_succ_itor_ptr graph::get_successors_internal( int x,
                                                               std::shared_ptr<ibitstream> ibs,
-                                                              vector<vector<int> >& window, 
-                                                              vector<int>& outd, 
-                                                              vector<int>& block_outdegrees ) 
+                                                              vector<vector<vertex_label_t> >& window,
+                                                              vector<int>& outd,
+                                                              vector<int>& block_outdegrees )
 const
 {
    int i;
@@ -940,7 +940,7 @@ const
    internal_succ_itor_ptr res_itor;
    
    if( residual_count != 0 ) {
-      res_itor.reset( new residual_iterator<int>(x, residual_count, this, ibs) );
+      res_itor.reset( new residual_iterator<vertex_label_t>(x, residual_count, this, ibs) );
    } 
 #ifndef CONFIG_FAST
    else {
@@ -986,7 +986,7 @@ const
       internal_succ_itor_ptr ref_list;
       
       if( window.size() > 0 ) {
-         typedef iterator_wrappers::itor_capture_wrapper<vector<int>::iterator, int> capture_wrapper_t;
+         typedef iterator_wrappers::itor_capture_wrapper<vector<vertex_label_t>::iterator, vertex_label_t> capture_wrapper_t;
 
          ref_list.reset(new capture_wrapper_t(window[ref_index].begin(), 0, (unsigned)outd[ref_index] ));
       } else {
@@ -995,7 +995,7 @@ const
       }
       
       // finally, make the block iterator.
-      block_iterator.reset( new masked_iterator<int>(block, ref_list ) );
+      block_iterator.reset( new masked_iterator<vertex_label_t>(block, ref_list ) );
    }
    
    if ( ref <= 0 ) {
@@ -1015,7 +1015,7 @@ const
          return block_iterator;
       } else {
          // Place #1 where a merged iterator is used.
-         typedef merged_iterator<int> mi_t;
+         typedef merged_iterator<vertex_label_t> mi_t;
 
          internal_succ_itor_ptr r(new mi_t( block_iterator, extra_itor, d ) );
 #ifndef CONFIG_FAST
@@ -1568,8 +1568,8 @@ int graph::intervalize( const vector<int>& x,
  */
 
 int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
-                                    vector<int>& ref_list, int ref_len,
-                                    vector<int>& curr_list,
+                                    vector<vertex_label_t>& ref_list, int ref_len,
+                                    vector<vertex_label_t>& curr_list,
                                     int curr_len, bool for_real )
 {
 #ifndef CONFIG_FAST
@@ -1581,7 +1581,8 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
    long written_bits_at_start = obs.get_written_bits();
 
    // We build the list of blocks copied and skipped (alternatively) from the previous list.
-   int i, j = 0, k = 0, prev = 0, curr_block_len = 0;
+   int i, j = 0, k = 0, curr_block_len = 0;
+   vertex_label_t prev = 0;
    bool copying = true;
 
    // This guarantees that we will not try to differentially compress when ref == 0.
@@ -1694,7 +1695,7 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
    // Finally, we write the extra list.
    if ( extra_count > 0 ) {
 
-      vector<int> residual;
+      vector<vertex_label_t> residual;
       int residual_count;
 
       if ( min_interval_length != NO_INTERVALS ) {
@@ -2095,9 +2096,9 @@ void graph::store_offline_graph_internal( GraphType _graph,
    int cyclic_buffer_size = window_size + 1;
 
    // Cyclic array of previous lists.
-   vector<vector<int> > lst( cyclic_buffer_size );
+   vector<vector<vertex_label_t> > lst( cyclic_buffer_size );
    
-   for( vector<vector<int> >::iterator i = lst.begin(); i != lst.end(); i++ )
+   for( vector<vector<vertex_label_t> >::iterator i = lst.begin(); i != lst.end(); i++ )
       i->resize( INITIAL_SUCCESSOR_LIST_LENGTH );
    
    // For each list, its length.

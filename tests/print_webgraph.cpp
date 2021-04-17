@@ -60,7 +60,7 @@ int main( int argc, char** argv ) {
        webgraph::bv_graph::graph::successor_iterator succ, succ_end;
        
        std::tie( succ, succ_end ) = n.successors();
-//       vector<int> succ = n.successor_vector();
+//       vector<vertex_label_t> succ = n.successor_vector();
       
        cerr << "outdegree : " << n.outdegree() << endl;
 

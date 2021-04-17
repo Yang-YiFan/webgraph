@@ -27,10 +27,9 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
+#include "base_node_iterator.hpp"
 
 namespace webgraph { namespace ascii_graph {
-
-typedef int vertex_label_t;
 
 // A vertex is described by both its label (v) and its successors
 class vertex_descriptor {

@@ -41,8 +41,8 @@ namespace utility_iterators {
 template<class val_type>
 class residual_iterator : public utility_iterator_base<int> {
 private:
-   unsigned int node;
-   int prev;
+   val_type node;
+   val_type prev;
    unsigned int i;
    const webgraph::bv_graph::graph* owner;
    std::shared_ptr<ibitstream> ibs;

@@ -185,18 +185,16 @@ namespace boost {
       return vertex_index_accessor();
    }
 
-   typedef unsigned int vertex_label_t;
-
-   vertex_label_t get( const vertex_index_accessor&,
+   webgraph::vertex_label_t get( const vertex_index_accessor&,
                        const bvg_traits::vertex_descriptor& v ) {
-      return static_cast<vertex_label_t>( v );
+      return static_cast<webgraph::vertex_label_t>( v );
    }
 
    template<>
    class property_traits<vertex_index_accessor> {
    public:
-      typedef vertex_label_t                 value_type;
-      typedef vertex_label_t                 reference;
+      typedef webgraph::vertex_label_t       value_type;
+      typedef webgraph::vertex_label_t       reference;
       typedef bvg_traits::vertex_descriptor  key_type;
       typedef readable_property_map_tag      category;
    };

@@ -38,6 +38,7 @@
 #include "../bitstreams/output_bitstream.hpp"
 #include "../log/logger.hpp"
 #include "base_graph.hpp"
+#include "base_node_iterator.hpp"
 
 namespace webgraph { namespace bv_graph {
 
@@ -66,7 +67,7 @@ private:
     * Internal successor iterator pointer - used because internal iterators
     * are polymorphic and thus must be manipulated through pointers.
     */
-   typedef std::shared_ptr<utility_iterators::utility_iterator_base<int> > 
+   typedef std::shared_ptr<utility_iterators::utility_iterator_base<vertex_label_t> >
       internal_succ_itor_ptr;
 
    /** Scratch variables used by the {@link #diffComp(OutputBitStream, int, int, int[],
@@ -90,7 +91,7 @@ public:
    typedef webgraph::bv_graph::node_iterator node_iterator;
    typedef std::pair<node_iterator, node_iterator> node_itor_pair;
 
-   typedef webgraph::bv_graph::iterator_wrappers::java_to_cpp<int> successor_iterator;
+   typedef webgraph::bv_graph::iterator_wrappers::java_to_cpp<vertex_label_t> successor_iterator;
    typedef std::pair<successor_iterator, successor_iterator> succ_itor_pair;
 
    /** This number classifies the present graph format. When new features require
@@ -270,11 +271,11 @@ protected:
 
    /** These are only used by differentially_compress. Would be preferable to put their declarations
     * there, at some point */
-   std::vector<int> extras;
+   std::vector<vertex_label_t> extras;
    std::vector<int> blocks;
    std::vector<int> len;
    std::vector<int> left;
-   std::vector<int> residuals;
+   std::vector<vertex_label_t> residuals;
 
 #ifndef CONFIG_FAST
    static logs::module_logger& lg() {
@@ -357,9 +358,9 @@ public:
 private:
    internal_succ_itor_ptr get_successors_internal( int x ) const;
 
-   internal_succ_itor_ptr get_successors_internal( int x, std::shared_ptr<ibitstream> ibs, 
-                                                   std::vector< std::vector<int> >& window, 
-                                                   std::vector<int>& outd, 
+   internal_succ_itor_ptr get_successors_internal( int x, std::shared_ptr<ibitstream> ibs,
+                                                   std::vector< std::vector<vertex_label_t> >& window,
+                                                   std::vector<int>& outd,
                                                    std::vector<int>& blockOutdegrees ) const;
 public:
    std::pair<node_iterator, node_iterator> get_node_iterator( int from ) const;
@@ -379,14 +380,14 @@ public:
 
 protected:
    void load_internal( std::string basename, int offset_step, std::ostream* log = NULL );
-   static int intervalize( const std::vector<int>& x, int min_interval, std::vector<int>& left, 
-                           std::vector<int>& len, 
-                           std::vector<int>& residuals );
+   static int intervalize( const std::vector<vertex_label_t>& x, int min_interval, std::vector<int>& left,
+                           std::vector<int>& len,
+                           std::vector<vertex_label_t>& residuals );
 
 private: 
    int differentially_compress( obitstream& obs, int current_node, int ref,
-                                std::vector<int>& ref_list, int ref_length,
-                                std::vector<int>& current_list,
+                                std::vector<vertex_label_t>& ref_list, int ref_length,
+                                std::vector<vertex_label_t>& current_list,
                                 int current_len, bool for_real );
 
 public:

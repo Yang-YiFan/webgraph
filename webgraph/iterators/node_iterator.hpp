@@ -50,7 +50,7 @@ private:
    int cyclic_buffer_size; // = windowSize + 1;
    /** At any time, window will be ready to be passed to {@link BVGraph#successors(int,
     * InputBitStream, int[][], int[], int[])} */ 
-   std::vector< std::vector<int> > window; // = new int[ cyclicBufferSize ][ INITIAL_SUCCESSOR_LIST_LENGTH ];
+   std::vector< std::vector<vertex_label_t> > window; // = new int[ cyclicBufferSize ][ INITIAL_SUCCESSOR_LIST_LENGTH ];
    /** At any time, outd will be ready to be passed to {@link BVGraph#successors(int,
     * InputBitStream, int[][], int[], int[])} */ 
    std::vector<int> outd; // = new int[ cyclicBufferSize ];
@@ -133,7 +133,7 @@ public:
    typedef webgraph::bv_graph::iterator_wrappers::java_to_cpp<int> succ_itor_wrapper;
    std::pair<succ_itor_wrapper, succ_itor_wrapper> successors();
 
-   const std::vector<int>& successor_vector();
+   const std::vector<vertex_label_t>& successor_vector();
    int outdegree();
    friend class graph;
 };
