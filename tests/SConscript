@@ -8,3 +8,4 @@ env['LIBS'] += ['webgraph', 'boost_regex', 'boost_program_options', 'boost_files
 
 env.Program(target="compress_webgraph", source = ["compress_webgraph.cpp"])
 env.Program(target="print_webgraph", source = ["print_webgraph.cpp"])
+env.Program(target="check_graph", source = ["check_graph.cpp"])
