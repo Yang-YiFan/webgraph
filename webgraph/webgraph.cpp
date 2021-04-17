@@ -1376,7 +1376,7 @@ void graph::load_internal( string basename, int offset_step, std::ostream* log )
          long off = 0;
          for( i = 0; i <= n; i++ ) {
             offset[ i ] = off = read_offset( offset_ibs ) + off;
-            cerr << "offset[" << i << "] = " << offset[i] << endl;
+            //cerr << "offset[" << i << "] = " << offset[i] << endl;
          }
             
          //pm.stop();

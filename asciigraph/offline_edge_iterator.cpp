@@ -126,7 +126,7 @@ void offline_edge_iterator::fetch_next_edge() {
 
    // Sanity checks.
    assert( 0 <= current_vertex.successor_vector()[0] );
-   assert( current_vertex.successor_vector()[0] < num_vertices );
+   assert( current_vertex.successor_vector()[0] < (vertex_label_t)num_vertices );
 
    current_edge = std::make_pair( *current_vertex,
                                   current_vertex.successor_vector()[current_successor_index] );

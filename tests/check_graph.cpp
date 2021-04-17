@@ -23,7 +23,7 @@ int main( int argc, char** argv ) {
 
     typedef std::shared_ptr<bvg::graph> bvg_ptr;
 
-    bvg_ptr bvg_gp = graph::load( bvg_name );
+    bvg_ptr bvg_gp = bvg::graph::load( bvg_name );
     bvg::graph::node_iterator bvg_n, bvg_n_end;
     std::tie(bvg_n, bvg_n_end) = bvg_gp->get_node_iterator(0);
 
@@ -47,7 +47,7 @@ int main( int argc, char** argv ) {
         assert(*bvg_n == *ag_n);
         assert(bvg_n.outdegree() == ag_n.outdegree());
         assert(bvg_successors.size() == ag_successors.size());
-        assert(bvg_n.outdegree() == bvg_successors.size());
+        assert((uint32_t)bvg_n.outdegree() == bvg_successors.size());
 
         //std::cerr<<"vertex: "<<*bvg_n<<std::endl;
         for(uint32_t i=0; i<bvg_successors.size(); i++) {
@@ -60,6 +60,7 @@ int main( int argc, char** argv ) {
         ++ag_n;
     }
     assert(ag_n == ag_n_end);
+    std::cerr<<"OK!"<<std::endl;
 
     return 0;
 }
