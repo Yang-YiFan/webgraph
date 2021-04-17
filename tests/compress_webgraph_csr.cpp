@@ -1,22 +1,3 @@
-/*               
- * Portions copyright (c) 2003-2007, Paolo Boldi and Sebastiano Vigna. Translation copyright (c) 2007, Jacob Ratkiewicz
- *
- *  This program is free software; you can redistribute it and/or modify it
- *  under the terms of the GNU General Public License as published by the Free
- *  Software Foundation; either version 2 of the License, or (at your option)
- *  any later version.
- *
- *  This program is distributed in the hope that it will be useful, but
- *  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- *  for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- */
-
 /*
  * Run it to see usage. Defaults should work for most parameters.
  * 
@@ -30,18 +11,23 @@
 #include <boost/program_options.hpp>
 #include <iostream>
 #include <string>
+#include <tuple>
+#include <assert.h>
 
 #include "webgraph/webgraph.hpp"
-//#include "../benchmarks/timing.hpp"
 
 /** Reads an immutable graph (ascii graph) and stores it as a {@link BVGraph}.
+ *  Instead of using ascii graph as frontend, the input ascii graph is first
+ *  converted into CSR format, and then passed to webgraph to test the CSR frontend. 
  */
 int main( int argc, char** argv ) {
    namespace po = boost::program_options;
    namespace bvg = webgraph::bv_graph;
+   namespace ag = webgraph::ascii_graph;
+   namespace csrg = webgraph::csrgraph;
    using namespace std;
 
-   string src, dest;
+   std::string src, dest;
    
    int window_size = -1, 
       max_ref_count = -1, 
@@ -156,17 +142,69 @@ int main( int argc, char** argv ) {
 
    //timing::time_t start = timimg::timer();
 
-   namespace ag = webgraph::ascii_graph;
-
    ag::offline_graph graph = ag::offline_graph::load( src );
+   ag::offline_graph::node_iterator ag_n, ag_n_end;
+   std::tie(ag_n, ag_n_end) = graph.get_node_iterator(0);
+
+   // now we convert the ascii graph to csr graph
+   int* offsets = new int[graph.get_num_nodes()+1];
+   int* edges = new int[graph.get_num_edges()];
+
+   offsets[0] = 0;
+   while(ag_n != ag_n_end) {
+      std::vector<int> ag_successors;
+      ag_successors = ag_n.successor_vector();
+
+      offsets[*ag_n+1] = offsets[*ag_n] + ag_n.outdegree();
+      for(int i=0; i<ag_successors.size(); i++) {
+         edges[i+offsets[*ag_n]] = ag_successors.at(i);
+      }
+   }
+   assert(offsets[graph.get_num_nodes()] == graph.get_num_edges());
+
+   csrg::csr_graph csr_g(graph.get_num_nodes(), graph.get_num_edges(), offsets, edges);
+   csrg::csr_graph::node_iterator csrg_n, csrg_n_end;
+   std::tie(csrg_n, csrg_n_end) = csr_g.get_node_iterator(0);
+
+   std::tie(ag_n, ag_n_end) = graph.get_node_iterator(0);
+   // check csr graph is identical to ascii graph
+   assert(csr_g.get_num_nodes() == graph.get_num_nodes());
+   assert(csr_g.get_num_edges() == graph.get_num_edges());
+
+   while( csrg_n != csrg_n_end ) {
+      std::vector<int> csrg_successors;
+      csrg_successors = csrg_n.successor_vector();
+
+      std::vector<int> ag_successors;
+      ag_successors = ag_n.successor_vector();
+
+      assert(*csrg_n == *ag_n);
+      assert(csrg_n.outdegree() == ag_n.outdegree());
+      assert(csrg_successors.size() == ag_successors.size());
+      assert((uint32_t)csrg_n.outdegree() == csrg_successors.size());
+
+      //std::cerr<<"vertex: "<<*csrg_n<<std::endl;
+      for(uint32_t i=0; i<csrg_successors.size(); i++) {
+         assert(csrg_successors.at(i) == ag_successors.at(i));
+         //std::cerr<<csrg_successors.at(i)<<", ";
+      }
+      //std::cerr<<std::endl;
+
+      ++csrg_n;
+      ++ag_n;
+   }
+   assert(ag_n == ag_n_end);
+   std::cerr<<"CSR conversion OK!"<<std::endl;
+
+   // pass the csr graph to compression framework
 
    ostream* log = &cerr;
 
    if( dest != "" ) {
-      cerr << "About to call store offline graph...\n";
-      bvg::graph::store_offline_graph<ag::offline_graph>( graph, dest, window_size, max_ref_count,
-                                                          min_interval_length,
-                                                          zeta_k, flags, log );
+      cerr << "About to call store CSR graph...\n";
+      bvg::graph::store_offline_graph<csrg::csr_graph>( csr_g, dest, window_size, max_ref_count,
+                                                        min_interval_length,
+                                                        zeta_k, flags, log );
    }
    else {
       if ( write_offsets ) {
