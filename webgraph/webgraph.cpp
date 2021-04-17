@@ -230,6 +230,15 @@ template void graph::store_offline_graph_internal<webgraph::ascii_graph::offline
                     std::string basename,
                     std::ostream* log = NULL );
 
+template void graph::store_offline_graph<webgraph::csrgraph::csr_graph>
+                  ( webgraph::csrgraph::csr_graph _graph,
+                    std::string basename, int window_size, int max_ref_count,
+                    int min_interval_length, int zeta_k, int flags, std::ostream* log = NULL );
+
+template void graph::store_offline_graph_internal<webgraph::csrgraph::csr_graph>
+                  ( webgraph::csrgraph::csr_graph _graph,
+                    std::string basename,
+                    std::ostream* log = NULL );
 
 // VARIABLES LIVE HERE
 const int graph::DEFAULT_MAX_REF_COUNT = std::numeric_limits<int>::max();

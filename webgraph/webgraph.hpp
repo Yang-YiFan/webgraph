@@ -39,6 +39,7 @@
 #include "../log/logger.hpp"
 #include "base_graph.hpp"
 #include "base_node_iterator.hpp"
+#include "../csrgraph/csr_graph.hpp"
 
 namespace webgraph { namespace bv_graph {
 

@@ -50,7 +50,9 @@ env['LIBPATH'] = [root, joinpath(root, 'include')]
 env['LINKFLAGS'] = " -g -Wl,-O3"
 
 # build static library
-sources = ['asciigraph/offline_graph.cpp', 'asciigraph/vertex.cpp', 'asciigraph/offline_edge_iterator.cpp', 'asciigraph/offline_vertex_iterator.cpp', 'bitstreams/input_bitstream.cpp', 'bitstreams/output_bitstream.cpp', 'properties/properties.cpp', 'utils/fast.cpp', 'webgraph/compression_flags.cpp', 'webgraph/webgraph.cpp', 'webgraph/iterators/node_iterator.cpp']
+sources = ['asciigraph/offline_graph.cpp', 'asciigraph/vertex.cpp', 'asciigraph/offline_edge_iterator.cpp', 'asciigraph/offline_vertex_iterator.cpp',\
+    'bitstreams/input_bitstream.cpp', 'bitstreams/output_bitstream.cpp', 'csrgraph/csr_node_iterator.cpp', 'properties/properties.cpp', 'utils/fast.cpp',\
+    'webgraph/compression_flags.cpp', 'webgraph/webgraph.cpp', 'webgraph/iterators/node_iterator.cpp']
 env.StaticLibrary('libwebgraph', sources)
 
 # build example apps

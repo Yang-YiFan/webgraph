@@ -14,6 +14,8 @@ class base_node_iterator {
     public:
         virtual const std::vector<vertex_label_t>& successor_vector() = 0;
         virtual int outdegree() = 0;
+        // virtual copy
+        // virtual operator = 
 };
 } // namespace webgraph
 
