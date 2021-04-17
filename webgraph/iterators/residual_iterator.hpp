@@ -24,7 +24,6 @@
 #include "../../utils/fast.hpp"
 #include "../../bitstreams/input_bitstream.hpp"
 #include <boost/iterator/iterator_facade.hpp>
-#include <boost/shared_ptr.hpp>
 #include <string>
 #include <sstream>
 #include "../webgraph.hpp"

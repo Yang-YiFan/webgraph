@@ -41,7 +41,7 @@ env['CPP'] = 'g++'
 env['CXX'] = env['CPP']
 
 env['DEBUG_FLAGS'] = ' '
-env['CFLAGS'] = ' -g -O3 -DCONFIG_FAST -funroll-loops -mfpmath=sse -mavx -Wall -fmax-errors=1'
+env['CFLAGS'] = ' -g -O3 -DCONFIG_FAST -funroll-loops -mfpmath=sse -mavx -Wall -fmax-errors=1 -Wno-parentheses '
 env['CPATH'] =  [root, joinpath(root, 'include')]
 env['CPPFLAGS'] = env['CFLAGS']
 env['CPPPATH'] = env['CPATH']

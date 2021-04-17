@@ -28,7 +28,6 @@
 #include <limits>
 #include <exception>
 #include <stdexcept>
-#include <boost/shared_ptr.hpp>
 
 //#define HARDCORE_DEBUG_MERGED_ITOR
 

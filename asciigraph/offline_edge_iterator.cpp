@@ -24,10 +24,8 @@
 #include <cassert>
 #include <algorithm>
 #include <boost/utility.hpp>
-#include <boost/tuple/tuple.hpp>
 
 using namespace boost;
-using namespace boost::tuples;
 
 using namespace std;
 

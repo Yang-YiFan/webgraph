@@ -21,7 +21,6 @@
 #define ITERATOR_WRAPPERS_HPP
 
 #include <boost/iterator/iterator_facade.hpp>
-#include <boost/shared_ptr.hpp>
 #include "utility_iterator_base.hpp"
 #include <iostream>
 #include <utility>

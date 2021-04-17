@@ -21,8 +21,6 @@
 #include <string>
 #include <sstream>
 #include <iterator>
-#include <boost/shared_ptr.hpp>
-#include <boost/tuple/tuple.hpp>
 
 #include "../webgraph/webgraph.hpp"
 

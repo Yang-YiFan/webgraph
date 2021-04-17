@@ -1,9 +1,7 @@
-#include <boost/shared_ptr.hpp>
-#include <boost/tuple/tuple.hpp>
-
 #include <vector>
 #include <numeric>
 #include <iostream>
+#include <tuple>
 
 #include "webgraph/webgraph.hpp"
 #include "webgraph/boost/integration.hpp"

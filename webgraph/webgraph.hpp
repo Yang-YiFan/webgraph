@@ -24,9 +24,9 @@
 #include <vector>
 #include <utility>
 #include <climits>
+#include <memory>
 
 #include <boost/progress.hpp>
-#include <boost/shared_ptr.hpp>
 
 #include "types.hpp"
 #include "../asciigraph/offline_graph.hpp"

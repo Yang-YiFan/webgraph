@@ -22,7 +22,7 @@
 
 #include <string>
 #include <fstream>
-#include <boost/shared_ptr.hpp>
+#include <tuple>
 #include <boost/graph/adjacency_iterator.hpp>
 
 #include "../webgraph/webgraph_vertex.hpp"

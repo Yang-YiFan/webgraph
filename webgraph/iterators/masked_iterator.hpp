@@ -28,7 +28,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <exception>
-#include <boost/shared_ptr.hpp>
 
 //#define HARDCORE_DEBUG_MI
 

@@ -21,7 +21,6 @@
 
 #include <sstream>
 #include <iostream>
-#include <boost/shared_ptr.hpp>
 
 namespace webgraph { namespace ascii_graph {
 

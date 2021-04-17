@@ -22,7 +22,6 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 #include <vector>
-#include <boost/shared_ptr.hpp>
 #include <sstream>
 #include <string>
 

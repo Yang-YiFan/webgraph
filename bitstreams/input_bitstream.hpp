@@ -26,8 +26,7 @@
 #include <cassert>
 #include "../utils/fast.hpp"
 #include <exception>
-
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 //#define LOGGING
 

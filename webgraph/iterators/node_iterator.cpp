@@ -23,7 +23,6 @@
 #include <utility>
 #include <algorithm>
 #include <cassert>
-#include <boost/tuple/tuple.hpp>
 
 #include "../webgraph.hpp"
 

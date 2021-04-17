@@ -23,7 +23,6 @@
 #ifndef CONFIG_FAST
 #include <fstream>
 #include <string>
-#include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
 #include <map>
 #include <iostream>
