@@ -20,7 +20,7 @@ class csr_node_iterator : public boost::iterator_facade<
         vertex_label_t* offsets;
         // the edges of current vertex
         vertex_label_t* edges;
-        int outdegree;
+        int outd;
         /** The index of the node just before the next one. */
         int curr;
         /** wether this is meant to stand as an end marker */
@@ -35,7 +35,7 @@ class csr_node_iterator : public boost::iterator_facade<
             numVertices = 0LL;
             offsets = nullptr;
             edges = nullptr;
-            outdegree = 0;
+            outd = 0;
             end_marker = true;
             buffer.clear();
         }
@@ -44,7 +44,7 @@ class csr_node_iterator : public boost::iterator_facade<
             numVertices(_numVertices), offsets(_offsets), edges(_edges), curr(_curr) {
             buffer.clear();
             assert(curr <= numVertices);
-            outdegree = offsets[1] - offsets[0];
+            outd = offsets[1] - offsets[0];
             if(curr == numVertices)
                 end_marker = true;
             else

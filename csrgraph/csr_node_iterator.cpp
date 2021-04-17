@@ -6,7 +6,7 @@ void csr_node_iterator::copy(const csr_node_iterator& other) {
     numVertices = other.numVertices;
     offsets = other.offsets;
     edges = other.edges;
-    outdegree = other.outdegree;
+    outd = other.outd;
     curr = other.curr;
     end_marker = other.end_marker;
 }
@@ -19,8 +19,8 @@ void csr_node_iterator::increment() {
         assert(curr < numVertices);
         assert(!end_marker);
         offsets += 1;
-        edges += outdegree;
-        outdegree = offsets[1] - offsets[0];
+        edges += outd;
+        outd = offsets[1] - offsets[0];
     }
 }
 
@@ -35,17 +35,17 @@ bool csr_node_iterator::equal(const csr_node_iterator& rhs) const {
     return ((rhs.numVertices == numVertices) &&
             (rhs.offsets == offsets) &&
             (rhs.edges == edges) &&
-            (rhs.outdegree == outdegree) &&
+            (rhs.outd == outd) &&
             (rhs.curr == curr));
 }
 
 const std::vector<vertex_label_t>& csr_node_iterator::successor_vector() {
-    buffer = std::vector<vertex_label_t>(edges, edges+outdegree);
+    buffer = std::vector<vertex_label_t>(edges, edges+outd);
     return buffer;
 }
    
 int csr_node_iterator::outdegree() {
-    return outdegree;
+    return outd;
 }
 
 } } // namespace webgraph
