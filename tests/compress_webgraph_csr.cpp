@@ -156,9 +156,10 @@ int main( int argc, char** argv ) {
       ag_successors = ag_n.successor_vector();
 
       offsets[*ag_n+1] = offsets[*ag_n] + ag_n.outdegree();
-      for(int i=0; i<ag_successors.size(); i++) {
+      for(uint32_t i=0; i<ag_successors.size(); i++) {
          edges[i+offsets[*ag_n]] = ag_successors.at(i);
       }
+      ++ag_n;
    }
    assert(offsets[graph.get_num_nodes()] == graph.get_num_edges());
 
