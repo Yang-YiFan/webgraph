@@ -50,7 +50,6 @@
 #include <boost/progress.hpp>
 
 #include "../utils/fast.hpp"
-#include "../bitstreams/tests/debug_obitstream.hpp"
 #include "types.hpp"
 #include "webgraph.hpp"
 #include "../asciigraph/offline_vertex_iterator.hpp"

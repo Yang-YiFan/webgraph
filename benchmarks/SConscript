@@ -1,8 +1,0 @@
-Import('env')
-
-env = env.Clone()
-
-env['LIBS'] += ['webgraph', 'boost_regex', 'boost_program_options', 'boost_filesystem', 'boost_system']
-
-env.Program(target="compute_indegree", source = ["compute_indegree.cpp"])
-env.Program(target="compute_outdegree", source = ["compute_outdegree.cpp"])

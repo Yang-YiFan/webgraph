@@ -57,4 +57,5 @@ env.StaticLibrary('libwebgraph', sources)
 
 # build example apps
 env.SConscript(joinpath('tests', 'SConscript'), variant_dir=joinpath(build_root, 'tests'), exports={'env' : env.Clone()})
-env.SConscript(joinpath('benchmarks', 'SConscript'), variant_dir=joinpath(build_root, 'benchmarks'), exports={'env' : env.Clone()})
+#env.SConscript(joinpath('benchmarks', 'SConscript'), variant_dir=joinpath(build_root, 'benchmarks'), exports={'env' : env.Clone()})
+env.SConscript(joinpath('utils/tools', 'SConscript'), variant_dir=joinpath(build_root, 'utils'), exports={'env' : env.Clone()})

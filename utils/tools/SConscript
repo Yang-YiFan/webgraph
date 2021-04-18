@@ -1,0 +1,7 @@
+Import('env')
+
+env = env.Clone()
+
+env['LIBS'] += ['boost_program_options']
+
+env.Program(target="generate_random_graph", source = ["generate_random_graph.cpp"])

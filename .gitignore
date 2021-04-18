@@ -14,3 +14,4 @@ iterators/tests/test_masked_iterator
 iterators/tests/test_merged_iterator
 tests/compress_webgraph
 tests/print_webgraph
+utils/tools/generate_random_graph
