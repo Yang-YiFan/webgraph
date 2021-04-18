@@ -14,6 +14,9 @@ build_root = joinpath(root, 'build')
 if not isdir(build_root):
     os.mkdir(build_root)
 
+if not isdir(joinpath(build_root, 'lib')):
+    os.mkdir(joinpath(build_root, 'lib'))
+
 ###################################################
 #
 # Set up the default build environment.  This environment is copied
@@ -53,9 +56,9 @@ env['LINKFLAGS'] = " -g -Wl,-O3"
 sources = ['asciigraph/offline_graph.cpp', 'asciigraph/vertex.cpp', 'asciigraph/offline_edge_iterator.cpp', 'asciigraph/offline_vertex_iterator.cpp',\
     'bitstreams/input_bitstream.cpp', 'bitstreams/output_bitstream.cpp', 'csrgraph/csr_node_iterator.cpp', 'properties/properties.cpp', 'utils/fast.cpp',\
     'webgraph/compression_flags.cpp', 'webgraph/webgraph.cpp', 'webgraph/iterators/node_iterator.cpp']
-env.StaticLibrary('libwebgraph', sources)
+env.StaticLibrary('build/lib/libwebgraph', sources)
 
 # build example apps
-env.SConscript(joinpath('tests', 'SConscript'), variant_dir=joinpath(build_root, 'tests'), exports={'env' : env.Clone()})
+env.SConscript(joinpath('tests', 'SConscript'), variant_dir=joinpath(build_root, 'tests'), exports={'env' : env.Clone(), 'lib_root' : joinpath(build_root, 'lib')})
 #env.SConscript(joinpath('benchmarks', 'SConscript'), variant_dir=joinpath(build_root, 'benchmarks'), exports={'env' : env.Clone()})
 env.SConscript(joinpath('utils/tools', 'SConscript'), variant_dir=joinpath(build_root, 'utils'), exports={'env' : env.Clone()})

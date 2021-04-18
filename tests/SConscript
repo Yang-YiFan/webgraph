@@ -1,10 +1,12 @@
 Import('env')
+Import('lib_root')
 
 env = env.Clone()
 
 #env['CPATH'] +=  []
 #env['CPPPATH'] = env['CPATH']
 env['LIBS'] += ['webgraph', 'boost_regex', 'boost_program_options', 'boost_filesystem', 'boost_system']
+env['LIBPATH'] += [lib_root]
 
 env.Program(target="compress_webgraph", source = ["compress_webgraph.cpp"])
 env.Program(target="print_webgraph", source = ["print_webgraph.cpp"])
