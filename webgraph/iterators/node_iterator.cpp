@@ -43,20 +43,21 @@ node_iterator::node_iterator( const graph* owner, std::shared_ptr<ibitstream> is
       this->owner = owner;
       this->n = owner->get_num_nodes();
       this->end_marker = false;
+      this->avail = 0;
       this->window.resize( cyclic_buffer_size );
       for( vector< vector<vertex_label_t> >::iterator itor = window.begin();
            itor != window.end();
            itor++ ) {
-         itor->resize( graph::INITIAL_SUCCESSOR_LIST_LENGTH );
-         
-        this->outd.resize( cyclic_buffer_size );
-//      this->block_outdegrees = NULL; // so long as offset step = 1 TODO change this
-
-        if ( from != 0 ) {
-          owner->position( *ibs, from );
-        }
-        curr = from - 1;
+        itor->resize( graph::INITIAL_SUCCESSOR_LIST_LENGTH );
       }
+         
+      this->outd.resize( cyclic_buffer_size );
+//    this->block_outdegrees = NULL; // so long as offset step = 1 TODO change this
+
+      if ( from != 0 ) {
+        owner->position_no_read( *ibs, from );
+      }
+      curr = from - 1;
       increment(); // grab the first node.
 }
 
@@ -73,6 +74,7 @@ void node_iterator::copy( const node_iterator& other ) {
    this->curr = other.curr;
    this->owner = other.owner;
    this->end_marker = other.end_marker;
+   this->avail = other.avail;
 }
 
 
@@ -88,11 +90,13 @@ void node_iterator::increment() {
 
       graph::internal_succ_itor_ptr itor;
 
-      itor = owner->get_successors_internal( curr, ibs, window, outd, block_outdegrees );
-      
+      itor = owner->get_successors_internal( curr, ibs, window, outd, block_outdegrees, avail );
+
       if( window[cur_index].size() < (unsigned)outd[cur_index] )
          window[cur_index ].resize( outd[cur_index] );
-  
+
+      if(avail < cyclic_buffer_size) avail++;
+
       vector<vertex_label_t>::iterator i = window[cur_index].begin();
 
       while( itor->has_next() ) {
@@ -136,7 +140,8 @@ bool node_iterator::equal(const node_iterator& rhs ) const {
       block_outdegrees == rhs.block_outdegrees && 
       from == rhs.from &&
       curr == rhs.curr &&
-      owner == rhs.owner;
+      owner == rhs.owner &&
+      avail == rhs.avail;
 }
 
 graph::succ_itor_pair node_iterator::successors() {

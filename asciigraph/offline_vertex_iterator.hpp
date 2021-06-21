@@ -20,10 +20,6 @@
 #ifndef OFFLINEVERTEXITERATOR_HPP_
 #define OFFLINEVERTEXITERATOR_HPP_
 
-#include "../webgraph/webgraph_vertex.hpp"
-
-#include "vertex.hpp"
-
 #include <string>
 #include <sstream>
 #include <boost/iterator/iterator_facade.hpp>
@@ -31,6 +27,9 @@
 #include <cassert>
 
 #include <iostream>
+
+#include "../webgraph/webgraph_vertex.hpp"
+#include "vertex.hpp"
 #include "base_node_iterator.hpp"
 
 namespace webgraph { namespace ascii_graph {

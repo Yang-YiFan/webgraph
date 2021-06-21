@@ -40,7 +40,7 @@ class node_iterator :
       int,
       boost::forward_traversal_tag,
       int>, public base_node_iterator<node_iterator> {
-private:
+protected:
    int n; // = numNodes();
    
    /** Our bit stream. */
@@ -64,6 +64,8 @@ private:
    const graph* owner;
    /** wether this is meant to stand as an end marker */
    bool end_marker;
+   /** how many edge lists are already available in vector window */
+   int avail;
 
    ////////////////////////////////////////////////////////////////////////////////
    // methods
@@ -74,6 +76,7 @@ public:
       this->owner = NULL;
       this->n = 0;
       this->end_marker = true;
+      this->avail = 0;
 
 #ifndef CONFIG_FAST
       logs::register_logger( "iterators", logs::LEVEL_MAX );
@@ -98,7 +101,7 @@ public:
       return *this;
    }
 
-private:
+protected:
    friend class boost::iterator_core_access;
 
    void copy( const node_iterator& other );

@@ -43,8 +43,8 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <experimental/filesystem> // drop experimental if using gcc8+
 
-#include <boost/filesystem/operations.hpp>
 #include <boost/regex.hpp>
 #include <boost/program_options.hpp>
 #include <boost/progress.hpp>
@@ -577,6 +577,7 @@ int graph::outdegree( int x ) const {
    // throw new IllegalStateException( "You cannot compute the outdegree of a random node
    //without offsets" ); 
 
+   ibitstream outdegree_ibs(graph_memory_ptr);
    // With all offsets, we just position and read.
    if ( offset_step == 1 ) {
       outdegree_ibs.set_position( offset[ x ] );
@@ -682,17 +683,17 @@ void graph::skip_node( ibitstream& ibs, int x, int outd ) const {
  */
 int graph::position( ibitstream& ibs, int x ) const {
    assert(x >= 0);
-   
+
    assert( offset_step > 0 );
-   
+
    // Without offsets, we just give up.
-   //      if ( offset_step <= 0 ) 
+   //      if ( offset_step <= 0 )
    //              throw new IllegalStateException( "You cannot position a stream without offsets" );
-   
+
 #if 0
    cerr << "Here's the offset_step - " << offset_step << endl;
 #endif
-   
+
    if ( offset_step == 1 ) {
 #if 0
       cerr << "offset_step == 1 - about to call set_position( " << offset[x] << ").\n";
@@ -700,42 +701,66 @@ int graph::position( ibitstream& ibs, int x ) const {
       ibs.set_position( offset[ x ] );
       return read_outdegree( ibs );
    }
-   
+
    // If we happen to be inside the offset cache, we're done.
    if ( x >= outdegree_cache_start && x < offset_cache_end ) {
       ibs.set_position( offset_cache[ x - outdegree_cache_start ] );
       return outdegree_cache[ x - outdegree_cache_start ];
    }
-   
+
    long block_start_offset = offset[ x / offset_step ];
-   
+
    ibs.set_position( block_start_offset );
    // We set the number of read bits so to read it later to fill the offset cache.
    ibs.set_read_bits( block_start_offset ); 
-   
+
    int offset_in_block = x % offset_step;
    outdegree_cache_start = x - offset_in_block;
-   
+
    int actual_step = min( offset_step, (int)(n - outdegree_cache_start) );
    outdegree_cache_end = outdegree_cache_start + actual_step;
-   
+
    // First, we skip outdegrees so to get to the successor lists.
    int i;
-   
+
    for( i = 0; i < actual_step; i++ ) 
       outdegree_cache[ i ] = read_outdegree( ibs );
-   
+
    // Then, we skip the lists before the one we want.
    for( i = 0; i < offset_in_block; i++ ) {
       offset_cache[ i ] = ibs.get_read_bits();
-      
+
       skip_node( ibs, outdegree_cache_start + i, outdegree_cache[ i ] );
    }
-   
+
    offset_cache[ offset_in_block ] = ibs.get_read_bits();
    offset_cache_end = outdegree_cache_start + offset_in_block + 1;
-   
+
    return outdegree_cache[ offset_in_block ];
+}
+
+void graph::position_no_read( ibitstream& ibs, int x ) const {
+   assert(x >= 0);
+
+   assert( offset_step > 0 );
+
+   // Without offsets, we just give up.
+   //      if ( offset_step <= 0 )
+   //              throw new IllegalStateException( "You cannot position a stream without offsets" );
+
+#if 0
+   cerr << "Here's the offset_step - " << offset_step << endl;
+#endif
+
+   if ( offset_step == 1 ) {
+#if 0
+      cerr << "offset_step == 1 - about to call set_position( " << offset[x] << ").\n";
+#endif
+      ibs.set_position( offset[ x ] );
+      return;
+   }
+   // not implemented for other cases
+   assert(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -770,13 +795,13 @@ graph::succ_itor_pair graph::get_successors( int x ) const {
 graph::internal_succ_itor_ptr graph::get_successors_internal( int x ) const {
    assert( in_memory ); // do this for now
    std::shared_ptr<ibitstream> ibs( new ibitstream(graph_memory_ptr) );
-   
+
    //ibitstream ibs = in_memory ? ibitstream( graph_memory ) : //ibitstream( ArrayInputStream( *graph_stream ) );
    
    vector<vector<vertex_label_t> > blah1(0);
    vector<int> blah(0);
    
-   internal_succ_itor_ptr p = get_successors_internal( x, ibs, blah1, blah, blah );
+   internal_succ_itor_ptr p = get_successors_internal( x, ibs, blah1, blah, blah, 0 );
    
    return p;
 }
@@ -826,7 +851,8 @@ graph::internal_succ_itor_ptr graph::get_successors_internal( int x,
                                                               std::shared_ptr<ibitstream> ibs,
                                                               vector<vector<vertex_label_t> >& window,
                                                               vector<int>& outd,
-                                                              vector<int>& block_outdegrees )
+                                                              vector<int>& block_outdegrees,
+                                                              int avail ) // how many vertices are already available in vector window
 const
 {
    int i;
@@ -847,7 +873,8 @@ const
    
    int d;
    int cyclic_buffer_size = window_size + 1;
-   
+   assert(avail <= cyclic_buffer_size);
+
    if ( window.size() == 0 ) { // We position on the given node.
       // Without offsets, we just give up.  if ( offset_step <= 0 ) throw new
       //IllegalStateException( "You cannot position a stream without offsets" );
@@ -872,7 +899,7 @@ const
          d = outd[ x % cyclic_buffer_size ] = block_outdegrees[ x % offset_step ];
       }
    }
-   
+
    if ( d == 0 ) {
       return internal_succ_itor_ptr(new utility_iterators::empty_iterator());
    }
@@ -887,7 +914,7 @@ const
    // The index in window[] of the node we are referring to (it makes sense only if
    // ref>0).
    ref_index = ( x - ref + cyclic_buffer_size ) % cyclic_buffer_size; 
-   
+
    // This catches both no references at all and no reference specifically for this node.
    if ( ref > 0 ) { 
       if ( ( block_count = read_block_count( *ibs ) ) !=  0 ) 
@@ -906,13 +933,13 @@ const
       
       // If the block count is even, we must compute the number of successors copied implicitly.
       if ( block_count % 2 == 0 ) 
-         copied += ( window.size() != 0 ? outd[ ref_index ] : outdegree( x - ref ) ) - total;
+         copied += ( ((window.size() != 0) && (ref <= avail)) ? outd[ ref_index ] : outdegree( x - ref ) ) - total;
       
       extra_count = d - copied;
    }
    else 
       extra_count = d;
-   
+
    int interval_count = 0; // Number of intervals
    
    if ( extra_count > 0 ) {
@@ -993,7 +1020,7 @@ const
    if( ref > 0 ) {
       internal_succ_itor_ptr ref_list;
       
-      if( window.size() > 0 ) {
+      if( (window.size() != 0) && (ref <= avail) ) {
          typedef iterator_wrappers::itor_capture_wrapper<vector<vertex_label_t>::iterator, vertex_label_t> capture_wrapper_t;
 
          ref_list.reset(new capture_wrapper_t(window[ref_index].begin(), 0, (unsigned)outd[ref_index] ));
@@ -1001,7 +1028,7 @@ const
          // compute the reference list recursively.
          ref_list = get_successors_internal(x - ref); 
       }
-      
+
       // finally, make the block iterator.
       block_iterator.reset( new masked_iterator<vertex_label_t>(block, ref_list ) );
    }
@@ -1323,12 +1350,12 @@ void graph::load_internal( string basename, int offset_step, std::ostream* log )
 
       // TODO - change this later?
       
-      unsigned file_size = boost::filesystem::file_size( basename + ".graph" );
+      size_t file_size = std::experimental::filesystem::file_size( basename + ".graph" );
       
       //if ( fis.getChannel().size() <= Integer.MAX_VALUE ) {
       graph_memory.resize( file_size );
   
-      for( unsigned pos = 0; pos < file_size; pos++ ) {
+      for( size_t pos = 0; pos < file_size; pos++ ) {
          graph_memory[pos] = fis.get();
       }
     
@@ -1462,10 +1489,10 @@ void graph::load_internal( string basename, int offset_step, std::ostream* log )
    //if ( offsetIbs != null ) offsetIbs.close();
       
    // We finally create the outdegreeIbs and, if needed, the two caches
-   if ( offset_step >= 0 ) {
+   //if ( offset_step >= 0 ) {
       //outdegreeIbs = in_memory ? new InputBitStream( graph_memory ): new InputBitStream( new FastMultiByteArrayInputStream( graphStream ) );
-      outdegree_ibs.attach( graph_memory_ptr );
-   }
+   //   outdegree_ibs.attach( graph_memory_ptr );
+   //}
       
    if ( offset_step > 1 ) {
       outdegree_cache.resize( offset_step );
@@ -1597,6 +1624,8 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
    if ( ref == 0 ) 
       ref_len = 0; 
 
+   std::vector<vertex_label_t> extras;
+   std::vector<int> blocks;
    extras.clear();
    blocks.clear();
 
@@ -1701,6 +1730,10 @@ int graph::differentially_compress( obitstream& obs, int curr_node, int ref,
 #endif
 
    // Finally, we write the extra list.
+   std::vector<int> len;
+   std::vector<int> left;
+   std::vector<vertex_label_t> residuals;
+
    if ( extra_count > 0 ) {
 
       vector<vertex_label_t> residual;
@@ -2231,8 +2264,8 @@ void graph::store_offline_graph_internal( GraphType _graph,
    // We write the final offset to the offset stream.
    write_offset( offset_obs, (int)( graph_obs.get_written_bits() - bit_offset ) );
   
-   //graph_obs.close();
-   //offset_obs.close();
+   //graph_obs.flush();
+   //offset_obs.flush();
 
    //   if ( pm != null ) {
    //      pm.stop();

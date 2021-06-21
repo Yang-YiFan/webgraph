@@ -44,7 +44,7 @@ env['CPP'] = 'g++'
 env['CXX'] = env['CPP']
 
 env['DEBUG_FLAGS'] = ' '
-env['CFLAGS'] = ' -g -O3 -DCONFIG_FAST -funroll-loops -mfpmath=sse -mavx -Wall -fmax-errors=1 -Wno-parentheses '
+env['CFLAGS'] = ' -g -O3 -DCONFIG_FAST -funroll-loops -mfpmath=sse -mavx -Wall -fmax-errors=1 -Wno-parentheses -fPIC '
 env['CPATH'] =  [root, joinpath(root, 'include')]
 env['CPPFLAGS'] = env['CFLAGS']
 env['CPPPATH'] = env['CPATH']
@@ -60,5 +60,4 @@ env.StaticLibrary('build/lib/libwebgraph', sources)
 
 # build example apps
 env.SConscript(joinpath('tests', 'SConscript'), variant_dir=joinpath(build_root, 'tests'), exports={'env' : env.Clone(), 'lib_root' : joinpath(build_root, 'lib')})
-#env.SConscript(joinpath('benchmarks', 'SConscript'), variant_dir=joinpath(build_root, 'benchmarks'), exports={'env' : env.Clone()})
 env.SConscript(joinpath('utils/tools', 'SConscript'), variant_dir=joinpath(build_root, 'utils'), exports={'env' : env.Clone()})

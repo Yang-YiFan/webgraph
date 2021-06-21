@@ -22,6 +22,7 @@ class csr_graph : public base_graph<csr_node_iterator> {
     public:
         csr_graph(long _numVertices, long _numEdges, vertex_label_t* _offsets, vertex_label_t* _edges) :
             numVertices(_numVertices), numEdges(_numEdges), offsets(_offsets), edges(_edges) { }
+        ~csr_graph() {} // delete offsets and edges explicitly
 
         long get_num_nodes() const { return numVertices; }
         long get_num_edges() const { return numEdges; }

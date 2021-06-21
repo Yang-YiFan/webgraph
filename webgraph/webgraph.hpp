@@ -252,7 +252,7 @@ protected:
    /** A bit stream wrapping {@link #graph_memory}, or {@link #graphStream}, used
        <em>only</em> by {@link #outdegree(int)}. It is declared here for efficiency
        reasons. It is thus safe for it to be mutable. */
-   mutable ibitstream outdegree_ibs;
+   //mutable ibitstream outdegree_ibs;
 
    /** A cache maintaining the outdegrees from {@link #cacheStart} (inclusive) to {@link
     * #outdegreeCacheEnd} (exclusive). */
@@ -272,11 +272,11 @@ protected:
 
    /** These are only used by differentially_compress. Would be preferable to put their declarations
     * there, at some point */
-   std::vector<vertex_label_t> extras;
-   std::vector<int> blocks;
-   std::vector<int> len;
-   std::vector<int> left;
-   std::vector<vertex_label_t> residuals;
+   //std::vector<vertex_label_t> extras;
+   //std::vector<int> blocks;
+   //std::vector<int> len;
+   //std::vector<int> left;
+   //std::vector<vertex_label_t> residuals;
 
 #ifndef CONFIG_FAST
    static logs::module_logger& lg() {
@@ -352,6 +352,7 @@ protected:
    void skip_node( ibitstream& ibs, int x, int outd ) const;
 
    int position( ibitstream& ibs, int x ) const;
+   void position_no_read( ibitstream& ibs, int x ) const;
 
 public:
    succ_itor_pair get_successors( int x ) const;
@@ -362,7 +363,8 @@ private:
    internal_succ_itor_ptr get_successors_internal( int x, std::shared_ptr<ibitstream> ibs,
                                                    std::vector< std::vector<vertex_label_t> >& window,
                                                    std::vector<int>& outd,
-                                                   std::vector<int>& blockOutdegrees ) const;
+                                                   std::vector<int>& blockOutdegrees,
+                                                   int avail ) const;
 public:
    std::pair<node_iterator, node_iterator> get_node_iterator( int from ) const;
 

@@ -377,18 +377,20 @@ void ibitstream::set_position( unsigned long position ) {
    assert( position >= 0 );
 
    // removed "unsigned"
-   const int delta = ( position >> 3 ) - ( this->position + pos );
+   const int delta = (int)(((long)position >> 3 ) - ( (long)this->position + (long)pos ));
 
    // Once graph memory is attached, we should be looking there.
    // But for some reason, we're looking in the (null) istream instead.
       
    int pos = (int)this->pos;
 
-   if ( delta <= avail && delta >= - pos ) {
+   if ( delta <= (int)avail && delta >= - pos ) {
       // We can reposition just by moving into the buffer.
-      avail -= delta;
+      int tmp = (int) avail - delta;
+      avail = (unsigned int)tmp;
       pos += delta;
       fill = unget_count = 0;
+      this->pos = (unsigned int)pos;
    } else {
       flush();
       is->seekg( position >> 3 );
